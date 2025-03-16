@@ -22,7 +22,7 @@ using static HighlightAttribute;
 using UnityEditor;
 
 [CustomPropertyDrawer(typeof(HighlightAttribute))]
-public class HighlightDrawer : PropertyDrawer
+public class HighlightPropertyDrawer : PropertyDrawer
 {
     public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
     {

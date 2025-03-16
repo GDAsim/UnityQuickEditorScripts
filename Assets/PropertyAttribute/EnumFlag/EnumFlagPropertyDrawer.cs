@@ -13,7 +13,7 @@ using UnityEngine;
 using UnityEditor;
 
 [CustomPropertyDrawer(typeof(EnumFlagAttribute))]
-public class EnumFlagAttributeDrawer : PropertyDrawer
+public class EnumFlagPropertyDrawer : PropertyDrawer
 {
     public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
     {
