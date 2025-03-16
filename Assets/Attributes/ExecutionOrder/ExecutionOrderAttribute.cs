@@ -1,9 +1,19 @@
-﻿#if UNITY_EDITOR
+﻿/*
+ * About:
+ * Custom Attribute for Monoscript/Classes To automatically set Script Exeuction Order
+ * 
+ * How To Use:
+ * Use [ExecutionOrder] on Classes
+ * 
+ */
 
 using System;
 using System.Collections.Generic;
 using System.IO;
+
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 
 [AttributeUsage(AttributeTargets.Class, Inherited = false, AllowMultiple = false)]
 public class ExecutionOrderAttribute : Attribute
@@ -15,6 +25,7 @@ public class ExecutionOrderAttribute : Attribute
         ExecutionOrder = executionOrder;
     }
 
+#if UNITY_EDITOR
     [InitializeOnLoadMethod]
     static void Execute()
     {
@@ -83,6 +94,5 @@ public class ExecutionOrderAttribute : Attribute
             }
         }
     }
-}
-
 #endif
+}
