@@ -22,13 +22,12 @@ using static HighlightAttribute;
 using UnityEditor;
 
 [CustomPropertyDrawer(typeof(HighlightAttribute))]
-public class HighlightPropertyDrawer : PropertyDrawer
+public class HighlightDrawer : PropertyDrawer
 {
     public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
     {
-        HighlightAttribute highlightAttribute = attribute as HighlightAttribute;
-
-        bool doHighlight = true;
+        var highlightAttribute = attribute as HighlightAttribute;
+        var doHighlight = true;
 
         // 1. Check for Validation method
         if (!string.IsNullOrEmpty(highlightAttribute.ValidateMethod))
@@ -49,7 +48,7 @@ public class HighlightPropertyDrawer : PropertyDrawer
             }
             else
             {
-                bool result = (bool)methodInfo.Invoke(property.serializedObject.targetObject, highlightAttribute.MethodParameters);
+                var result = (bool)methodInfo.Invoke(property.serializedObject.targetObject, highlightAttribute.MethodParameters);
                 doHighlight = result;
             }
         }
@@ -57,8 +56,8 @@ public class HighlightPropertyDrawer : PropertyDrawer
         if (doHighlight)
         {
             // Draw HighlightRect
-            float padding = EditorGUIUtility.standardVerticalSpacing;
-            float padding2x = padding * 2;
+            var padding = EditorGUIUtility.standardVerticalSpacing;
+            var padding2x = padding * 2;
             Rect highlightRect = new(position.x - padding, position.y - padding,
                 position.width + padding2x, position.height + padding2x);
             EditorGUI.DrawRect(highlightRect, GetColor(highlightAttribute.Color));
@@ -84,14 +83,10 @@ public class HighlightAttribute : PropertyAttribute
 
     public enum HighlightColor
     {
-        Red,
-        Pink,
-        Orange,
         Yellow,
+        Red,
         Green,
         Blue,
-        Violet,
-        White
     }
      
     public HighlightAttribute(HighlightColor color = HighlightColor.Yellow, string validateMethod = null, params object[] args)
@@ -103,18 +98,13 @@ public class HighlightAttribute : PropertyAttribute
 
     public static Color GetColor(HighlightColor color)
     {
-        switch (color)
+        return color switch
         {
-            case HighlightColor.Yellow:
-                return new Color32(255, 255, 0, 255);
-            case HighlightColor.Red:
-                return new Color32(255, 0, 0, 255);
-            case HighlightColor.Green:
-                return new Color32(0, 255, 0, 255);
-            case HighlightColor.Blue:
-                return new Color32(0, 0, 255, 255);
-            default:
-                return new Color32(255, 255, 255, 255);
-        }
+            HighlightColor.Yellow => new Color32(255, 255, 0, 255),
+            HighlightColor.Red => new Color32(255, 0, 0, 255),
+            HighlightColor.Green => new Color32(0, 255, 0, 255),
+            HighlightColor.Blue => new Color32(0, 0, 255, 255),
+            _ => new Color32(255, 255, 255, 255),
+        };
     }
 }
