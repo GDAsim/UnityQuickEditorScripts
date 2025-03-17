@@ -67,6 +67,7 @@ public class HighlightDrawer : PropertyDrawer
         }
         else
         {
+            // Draw Default
             EditorGUI.PropertyField(position, property, label);
         }
     }
