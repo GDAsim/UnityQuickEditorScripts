@@ -167,11 +167,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IntMax: 125
-  FloatMax: 122.3
+  FloatMax: 100
   IntegerStats: 25
-  FloatStats: 80
-  FloatStats2: 45.6
-  aa: 1
+  FloatStats: 50
+  FloatStatsEmpty: 30.21
+  BoolStats: 1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

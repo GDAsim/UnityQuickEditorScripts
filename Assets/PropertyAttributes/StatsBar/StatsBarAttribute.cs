@@ -100,7 +100,7 @@ public class StatsBarDrawer : PropertyDrawer
 
     public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
     {
-        if (drawDefault) return EditorGUIUtility.singleLineHeight;
+        if (drawDefault) return base.GetPropertyHeight(property, label);
 
         var newHeight = (EditorGUIUtility.singleLineHeight * 2) + EditorGUIUtility.standardVerticalSpacing;
         return newHeight;
