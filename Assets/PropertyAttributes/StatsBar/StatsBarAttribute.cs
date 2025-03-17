@@ -17,7 +17,7 @@ using static StatsBarAttribute;
 using UnityEditor;
 
 [CustomPropertyDrawer(typeof(StatsBarAttribute))]
-public class StatsBarDrawer : PropertyDrawer
+public class StatsBarPropertyDrawer : PropertyDrawer
 {
     readonly float Height = EditorGUIUtility.singleLineHeight;
     readonly float Padding = EditorGUIUtility.standardVerticalSpacing;
