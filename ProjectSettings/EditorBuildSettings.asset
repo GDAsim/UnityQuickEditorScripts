@@ -6,6 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/PropertyAttribute/EnumFlag/Example/EnumFlagExample.unity
+    path: Assets/PropertyAttributes/EnumFlag/Example/EnumFlagExample.unity
     guid: 61ee98498ab18704db11aa16821f727d
   m_configObjects: {}
