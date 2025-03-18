@@ -118,6 +118,22 @@ public static class EditorGUIUtilities
         selectedIndex = GUILayout.Toolbar(selectedIndex, toolbar);
         return (T)values.GetValue(selectedIndex);
     }
+
+
+    /// <summary>
+    /// Draw Default Property but with Colored Background
+    /// </summary>
+    public static void DrawColoredBGField(Rect position, SerializedProperty property, GUIContent label, Color color)
+    {
+        var prevColor = GUI.backgroundColor;
+
+        GUI.backgroundColor = color;
+
+        // Draw Default
+        EditorGUI.PropertyField(position, property, label);
+
+        GUI.backgroundColor = prevColor;
+    }
 }
 
 #endif

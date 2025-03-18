@@ -27,7 +27,7 @@ public class ExecutionOrderAttribute : Attribute
 
 #if UNITY_EDITOR
     [InitializeOnLoadMethod]
-    static void Execute()
+    static void ExecuteOnLoad()
     {
         var type = typeof(ExecutionOrderAttribute);
         var scriptsWithAttribute = new Dictionary<MonoScript, ExecutionOrderAttribute>();
