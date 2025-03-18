@@ -53,6 +53,7 @@ static class FastScriptToGameobject
                 {
                     var script = dragItem as MonoScript;
                     newGO.AddComponent(script.GetClass());
+                    newGO.name = script.name;
                 }
             }
 
