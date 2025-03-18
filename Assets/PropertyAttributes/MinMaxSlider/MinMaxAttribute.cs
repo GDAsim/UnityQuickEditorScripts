@@ -22,7 +22,6 @@ public class RangePropertyDrawer : PropertyDrawer
     const float SliderHeight = 16f;
     const float RangeGap = 16f;
 
-    bool noMinMax = false;
     bool drawDefault;
 
     public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
@@ -47,7 +46,6 @@ public class RangePropertyDrawer : PropertyDrawer
         if (rangeAttribute == null)
         {
             rangeAttribute = new MinMaxSliderAttribute(minProperty.floatValue - 10, maxProperty.floatValue + 10);
-            noMinMax = true;
         }
 
         // Start Drawing Range Property
