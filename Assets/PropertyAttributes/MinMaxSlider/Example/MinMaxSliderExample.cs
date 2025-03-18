@@ -8,5 +8,5 @@ public class MinMaxSliderExample : MonoBehaviour
     [SerializeField] Range rangeMinMax2 = new(1f, 11f);
 
     [MinMaxSlider(0f, 10f)]
-    //[SerializeField] float floatVar = 123f;
+    [SerializeField] float floatVar = 123f;
 }
