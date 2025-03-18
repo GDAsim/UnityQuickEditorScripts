@@ -1,3 +1,17 @@
+/*
+ * About:
+ * Custom UnityEditor Property Drawer for [EnumFlags] CustomAttribute
+ * 
+ * How To Use:
+ * Use [EnumFlags] on enums to have unity inspector draw a custom GUI for enums
+ * e.g [Highlight(HighlightColor.Green]
+ * e.g [Highlight(HighlightColor.Green, "ValidateHighlight", PlayerState.Moving)]
+ * 
+ * References:
+ * https://gist.github.com/LotteMakesStuff
+ * 
+ */
+
 using System;
 using UnityEngine;
 

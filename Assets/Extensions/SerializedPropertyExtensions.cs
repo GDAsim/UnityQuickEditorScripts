@@ -1,5 +1,7 @@
 using System;
 using System.Reflection;
+
+#if UNITY_EDITOR
 using UnityEditor;
 
 public static class SerializedPropertyExtensions
@@ -17,3 +19,4 @@ public static class SerializedPropertyExtensions
         return field?.FieldType;
     }
 }
+#endif

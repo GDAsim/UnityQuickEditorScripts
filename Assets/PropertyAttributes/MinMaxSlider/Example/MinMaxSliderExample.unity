@@ -157,6 +157,7 @@ MonoBehaviour:
   rangeMinMax2:
     min: 4
     max: 8
+  floatVar: 123
 --- !u!4 &804428820
 Transform:
   m_ObjectHideFlags: 0
@@ -202,11 +203,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rangeMinMax:
-    min: 0.23608565
-    max: 2.87834
+    min: 4
+    max: 5
   rangeMinMax2:
-    min: 0
-    max: 10
+    min: 9.568052
+    max: 34.56801
+  floatVar: 123
 --- !u!4 &1930972319
 Transform:
   m_ObjectHideFlags: 0
