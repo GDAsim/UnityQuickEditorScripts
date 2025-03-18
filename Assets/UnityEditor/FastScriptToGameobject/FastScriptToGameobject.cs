@@ -4,6 +4,11 @@
  * 
  * Features:
  * Allows dragging of multiple Scripts
+ * 
+ * How To Use:
+ * This script is automatically loaded.
+ * Simply Drag a monobehaviour script to hierachy
+ * 
  */
 
 #if UNITY_EDITOR
