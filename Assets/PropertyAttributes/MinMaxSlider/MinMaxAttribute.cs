@@ -1,14 +1,11 @@
 /*
  * About:
- * Custom UnityEditor Property Drawer for [EnumFlags] CustomAttribute
+ * Provides a new Data Type "Range", Wrapper for a Min Max Tuple float value
+ * Provides a Custom UnityEditor Property Drawer for [Range] and [MinMaxSlider] CustomAttribute for "Range" Datatype
  * 
  * How To Use:
- * Use [EnumFlags] on enums to have unity inspector draw a custom GUI for enums
- * e.g [Highlight(HighlightColor.Green]
- * e.g [Highlight(HighlightColor.Green, "ValidateHighlight", PlayerState.Moving)]
- * 
- * References:
- * https://gist.github.com/LotteMakesStuff
+ * Declaring a Range datatype will have unity inspector draw a custom GUI
+ * Use [[MinMaxSlider(0f, 10f)]] on the Range datatype will set the Limit for Min and Max Value
  * 
  */
 
