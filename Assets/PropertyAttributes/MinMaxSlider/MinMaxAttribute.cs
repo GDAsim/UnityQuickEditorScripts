@@ -5,7 +5,7 @@
  * 
  * How To Use:
  * Declaring a Range datatype will have unity inspector draw a custom GUI
- * Use [[MinMaxSlider(0f, 10f)]] on the Range datatype will set the Limit for Min and Max Value
+ * Use [MinMaxSlider(0f, 10f)] on the Range datatype will set the Limit for Min and Max Value
  * 
  */
 

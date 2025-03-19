@@ -119,7 +119,6 @@ public static class EditorGUIUtilities
         return (T)values.GetValue(selectedIndex);
     }
 
-
     /// <summary>
     /// Draw Default Property but with Colored Background
     /// </summary>
@@ -128,6 +127,22 @@ public static class EditorGUIUtilities
         var prevColor = GUI.backgroundColor;
 
         GUI.backgroundColor = color;
+
+        // Draw Default
+        EditorGUI.PropertyField(position, property, label);
+
+        GUI.backgroundColor = prevColor;
+    }
+
+    /// <summary>
+    /// Draw Error Message GUI instead of the regular property field
+    /// TODO
+    /// </summary>
+    public static void DrawErrorField(Rect position, SerializedProperty property, GUIContent label)
+    {
+        var prevColor = GUI.backgroundColor;
+
+        GUI.backgroundColor = Color.red;
 
         // Draw Default
         EditorGUI.PropertyField(position, property, label);

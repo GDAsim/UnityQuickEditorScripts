@@ -6,6 +6,8 @@ public class EnumFlagExample : MonoBehaviour
     [EnumFlag]
     [SerializeField] Fruits fruit;
 
+    [SerializeField] Fruits fruit2;
+
     [Flags]
     public enum Fruits
     {
