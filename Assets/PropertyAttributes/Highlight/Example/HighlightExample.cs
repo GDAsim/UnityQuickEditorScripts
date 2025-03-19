@@ -14,7 +14,7 @@ public class HighlightExample : MonoBehaviour
     [Highlight(HighlightAttribute.HighlightColor.Red, "ErrorMethod")]
     [SerializeField] int ValidationErrorMethod;
 
-    [Highlight(HighlightAttribute.HighlightColor.Red, "ErrorMethod2",1,2)]
+    [Highlight(HighlightAttribute.HighlightColor.Red, "ErrorMethod2", 1, 2)]
     [SerializeField] int ValidationErrorMethod2;
 
     bool isEven(int a)
