@@ -14,7 +14,6 @@
 
 using System;
 using UnityEngine;
-using System.Reflection;
 using static HighlightAttribute;
 
 
@@ -27,29 +26,44 @@ public class HighlightPropertyDrawer : PropertyDrawer
     public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
     {
         var highlightAttribute = attribute as HighlightAttribute;
+        var targetObject = property.serializedObject.targetObject;
+
         var doHighlight = true;
 
-        // 1. Check for Validation method
-        if (!string.IsNullOrEmpty(highlightAttribute.ValidateMethod))
+        bool haveCallback = !string.IsNullOrEmpty(highlightAttribute.ValueCallback);
+        if (haveCallback)
         {
-            // 1b. Get Class & Search for Method using String input (highlightAttribute.ValidateMethod)
-            Type type = property.serializedObject.targetObject.GetType();
-            MethodInfo methodInfo = type.GetMethod(highlightAttribute.ValidateMethod, BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
-
-            if (methodInfo == null)
+            if (!targetObject.TryGetMethodFromTarget(highlightAttribute.ValueCallback, out var methodInfo))
             {
-                Debug.LogWarning($"Validation method \"{highlightAttribute.ValidateMethod}\" not found in script.", property.serializedObject.targetObject);
+                Debug.LogError($"Validation method \"{highlightAttribute.ValueCallback}\" not found in script.", targetObject);
+
+                EditorGUIUtilities.DrawErrorField(position, property, label);
+
+                return;
             }
-
-            // 2. Check Parameter Lengh
-            else if (methodInfo.GetParameters().Length != highlightAttribute.MethodParameters.Length)
+            else if (!methodInfo.ValidateMethodParameters(highlightAttribute.MethodParameters))
             {
-                Debug.LogWarning($"The HighlightAttribute has different number of parameters than the method \"{highlightAttribute.ValidateMethod}\" ", property.serializedObject.targetObject);
+                Debug.LogError($"The HighlightAttribute input parameters does not match Validation Method\"{highlightAttribute.ValueCallback}\" ", targetObject);
+
+                EditorGUIUtilities.DrawErrorField(position, property, label);
+
+                return;
             }
             else
             {
-                var result = (bool)methodInfo.Invoke(property.serializedObject.targetObject, highlightAttribute.MethodParameters);
-                doHighlight = result;
+                var result = methodInfo.Invoke(targetObject, highlightAttribute.MethodParameters);
+                if (bool.TryParse(result.ToString(), out var boolvalue))
+                {
+                    doHighlight = boolvalue;
+                }
+                else
+                {
+                    Debug.LogError("The Method Return type needs to be bool");
+
+                    EditorGUIUtilities.DrawErrorField(position, property, label);
+
+                    return;
+                }
             }
         }
 
@@ -77,7 +91,7 @@ public class HighlightPropertyDrawer : PropertyDrawer
 public class HighlightAttribute : PropertyAttribute
 {
     public readonly HighlightColor Color;
-    public readonly string ValidateMethod;
+    public readonly string ValueCallback;
     public readonly object[] MethodParameters;
 
     public readonly Action ValidateMethod2;
@@ -89,11 +103,11 @@ public class HighlightAttribute : PropertyAttribute
         Green,
         Blue,
     }
-     
+
     public HighlightAttribute(HighlightColor color = HighlightColor.Yellow, string validateMethod = null, params object[] args)
     {
         Color = color;
-        ValidateMethod = validateMethod;
+        ValueCallback = validateMethod;
         MethodParameters = args;
     }
 
