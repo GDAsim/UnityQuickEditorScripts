@@ -1,6 +1,5 @@
 /*
  * About:
- * Provides a new Data Type "Range", Wrapper for a Min Max Tuple float value
  * Provides a Custom UnityEditor Property Drawer for [Range] and [MinMaxSlider] CustomAttribute for "Range" Datatype
  * 
  * How To Use:
@@ -31,18 +30,17 @@ public class RangePropertyDrawer : PropertyDrawer
         {
             Debug.LogWarning($"This MinMaxSlider Attribute only not support this {nameof(Range)} data type", property.serializedObject.targetObject);
 
-            // Draw Default
             drawDefault = true;
-            EditorGUI.PropertyField(position, property, label);
+            EditorGUIUtilities.DrawErrorField(position, property, label);
 
             return;
         }
 
         if (property.serializedObject.isEditingMultipleObjects) return;
 
-        var minProperty = property.FindPropertyRelative("min");
-        var maxProperty = property.FindPropertyRelative("max");
         var rangeAttribute = attribute as MinMaxSliderAttribute;
+        var minProperty = property.FindPropertyRelative("Min");
+        var maxProperty = property.FindPropertyRelative("Max");
         if (rangeAttribute == null)
         {
             rangeAttribute = new MinMaxSliderAttribute(minProperty.floatValue - 10, maxProperty.floatValue + 10);
@@ -97,42 +95,5 @@ public class MinMaxSliderAttribute : PropertyAttribute
     {
         Min = min;
         Max = max;
-    }
-}
-
-[Serializable]
-public struct Range
-{
-    [SerializeField] float min;
-    [SerializeField] float max;
-
-    public float Min
-    {
-        get
-        {
-            return min;
-        }
-        set
-        {
-            min = value;
-        }
-    }
-
-    public float Max
-    {
-        get
-        {
-            return max;
-        }
-        set
-        {
-            max = value;
-        }
-    }
-
-    public Range(float min, float max)
-    {
-        this.min = min;
-        this.max = max;
     }
 }
