@@ -6,8 +6,10 @@
 #if UNITY_EDITOR
 
 using System;
+using System.Reflection;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public static class EditorGUIUtilities
 {
@@ -136,7 +138,6 @@ public static class EditorGUIUtilities
 
     /// <summary>
     /// Draw Error Message GUI instead of the regular property field
-    /// TODO
     /// </summary>
     public static void DrawErrorField(Rect position, SerializedProperty property, GUIContent label)
     {
@@ -144,8 +145,10 @@ public static class EditorGUIUtilities
 
         GUI.backgroundColor = Color.red;
 
-        // Draw Default
-        EditorGUI.PropertyField(position, property, label);
+        EditorGUI.LabelField(position, label);
+        position.x += EditorGUIUtility.labelWidth;
+
+        EditorGUI.HelpBox(position, "Error!", MessageType.Error);
 
         GUI.backgroundColor = prevColor;
     }
