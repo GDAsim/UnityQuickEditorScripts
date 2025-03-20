@@ -152,11 +152,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   floatvar: 10
-  intvar: 10
   floatCallbackMethod: 100
-  intCallbackMethod: 100
   floatCallbackProp: 1000
-  intCallbackProp: 1000
+  floatCallbackMethodArgs: 10000
+  floatCallbackMethodError: 0
+  floatCallbackPropertyError: 0
 --- !u!4 &437870043
 Transform:
   m_ObjectHideFlags: 0
