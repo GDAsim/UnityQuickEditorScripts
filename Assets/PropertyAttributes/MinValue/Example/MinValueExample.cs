@@ -5,6 +5,9 @@ public class MinValueExample : MonoBehaviour
     [MinValue(10)]
     public float floatvar;
 
+    [MinValue(10)]
+    public float[] floatlist;
+
     [MinValue("MinValueMethod")]
     public float floatCallbackMethod;
 

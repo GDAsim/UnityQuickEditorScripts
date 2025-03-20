@@ -152,6 +152,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   floatvar: 10
+  floatlist:
+  - 10
+  - 10
+  - 10
   floatCallbackMethod: 100
   floatCallbackProp: 1000
   floatCallbackMethodArgs: 10000
