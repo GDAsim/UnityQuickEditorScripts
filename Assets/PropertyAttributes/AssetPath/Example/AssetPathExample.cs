@@ -1,4 +1,3 @@
-using UnityEditor;
 using UnityEngine;
 
 public class AssetPathExample : MonoBehaviour
@@ -6,7 +5,9 @@ public class AssetPathExample : MonoBehaviour
     [AssetPath(typeof(AssetPathExample))]
     public string Prefab;
 
-    [AssetPath(typeof(SceneAsset))]
+#if UNITY_EDITOR
+    [AssetPath(typeof(UnityEditor.SceneAsset))]
+#endif
     public string Scene;
 
     [AssetPath(typeof(GameObject))]
