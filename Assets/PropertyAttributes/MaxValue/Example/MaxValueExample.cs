@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class MaxValueExample : MonoBehaviour
 {
-    [MaxValue(10)]
+    [MaxValue(100)]
     public float floatvar;
 
     [MaxValue("MaxValueMethod")]

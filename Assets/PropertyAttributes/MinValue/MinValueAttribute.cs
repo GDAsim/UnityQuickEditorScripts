@@ -44,7 +44,7 @@ public class MinValuePropertyDrawer : PropertyDrawer
                     }
                     else
                     {
-                        Debug.LogError("The Method Return type needs to support converting to float");
+                        Debug.LogError("The Method Return type needs to support converting to float", targetObject);
 
                         EditorGUIUtilities.DrawErrorField(position, property, label);
 
@@ -71,7 +71,7 @@ public class MinValuePropertyDrawer : PropertyDrawer
                 }
                 else
                 {
-                    Debug.LogError("The Get Property type needs to support converting to float");
+                    Debug.LogError("The Get Property type needs to support converting to float", targetObject);
 
                     EditorGUIUtilities.DrawErrorField(position, property, label);
 
