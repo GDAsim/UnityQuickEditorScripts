@@ -1,4 +1,5 @@
-﻿using UnityEditor;
+﻿#if UNITY_EDITOR
+using UnityEditor;
 using UnityEngine;
 
 /// <summary>
@@ -180,3 +181,5 @@ public class EditorExample : Editor
 /// </summary>
 [CreateAssetMenu(fileName = "ScriptableObjectExample", menuName = "ScriptableObject")]
 public class ScriptableObjectExample : ScriptableObject { }
+
+#endif
