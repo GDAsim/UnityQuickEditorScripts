@@ -2,9 +2,34 @@
 using UnityEngine;
 
 /// <summary>
+/// Automatically adds required components to the same GameObject.
+/// Mark this component as dependent on required component
+/// Prevents removal dependnt component
+/// </summary>
+[RequireComponent(typeof(Rigidbody))]
+
+/// <summary>
 /// Apply to classes sub MonoBehaviour.Requires matching class name and file name.
 /// </summary>
 [AddComponentMenu("Name/Name")]
+
+/// <summary>
+/// Multiple of this component cannot be added to the same GameObject.
+/// </summary>
+[DisallowMultipleComponent]
+
+/// <summary>
+/// Provide a custom documentation URL for a class.
+/// </summary>
+[HelpURL("http://example.com/docs/MyComponent.html")]
+
+/// <summary>
+/// Allows the monobehavour class to run unity events in Edit Mode.
+/// e.g Awake,Update,OnGUI
+/// </summary>
+[ExecuteInEditMode]
+[ExecuteAlways]
+
 public class ClassName : MonoBehaviour
 {
     /// <summary>
@@ -63,69 +88,45 @@ public class ClassName : MonoBehaviour
     public int HiddenVar;
 
     /// <summary>
-    /// force Serialize a private var
+    /// Force Serialize a private var
     /// </summary>
     [SerializeField]
-    private bool hasHealthPotion = true;
+    private bool ForceSerializedPrivateVar = true;
 
-    //[InitializeOnLoadAttribute]
-    //[InitializeOnLoadMethodAttribute]
-    //    [InitializeOnEnterPlayMode]
-    //[FilePathAttribute]
-}
-
-
-
-/// <summary>
-/// Mark the custom editor to allow editing multiple selected objects
-/// </summary>
-[CanEditMultipleObjects]
-public class EditorExample : Editor
-{
-
-}
-
-/// <summary>
-/// Make the SciptableObject class an asset to be listed in assets/create submenu. to be easily created and stored in the project as ".asset" files.
-/// </summary>
-public class ScriptableObjectExample : ScriptableObject
-{
-
-}
-
-[CreateAssetMenu]// Make the SciptableObject class an asset to be listed in assets/create submenu. to be easily created and stored in the project as ".asset" files.
-public class ClassName2 : MonoBehaviour
-{
-    [Delayed]//Make a variable not update unless user press enter in inspector. float, int, or string 
+    /// <summary>
+    /// Make a variable not update unless user press enter in inspector. float, int, or string 
+    /// </summary>
+    [Delayed]
     public string Somefield2;
-}
-[DisallowMultipleComponent]//Prevents MonoBehaviour of same type (or subtype) to be added more than once to a GameObject.
-public class ClassName3 : MonoBehaviour
-{
 
-}
-/// <summary>
-/// - Update is only called when something in the scene changed.
-///- OnGUI is called when the Game View recieves an Event.
-///- OnRenderObject and the other rendering callback functions are called on every repaint of the Scene View or Game View.
-/// </summary>
-[ExecuteInEditMode] //Allows monobehavour to run in edit mode
-public class ClassName4 : MonoBehaviour
-{
-    [GUITarget(1)]// Label will appear on display 0 and 1 only, use for TV and Wii U dev that has more than one gui display
+    /// <summary>
+    /// Draws a Slider in inspector for float/int vars
+    /// </summary>
+    [Range(0, 1)]
+    public float RangeVar;
+
+    /// <summary>
+    /// OnGUI will run on specified display, Default is 0
+    /// Some platform do not support multiple display
+    /// </summary>
+    [GUITarget(1)]
     void OnGUI()
     {
-        GUI.Label(new Rect(10, 10, 300, 100), "Visible on TV and Wii U GamePad only");
+        GUI.Label(new Rect(10, 10, 300, 100), "Visible on Display 1 Only");
     }
 
-}
-[HelpURL("http://example.com/docs/MyComponent.html")]//Provide a custom documentation URL for a class.
-[CanEditMultipleObjects]
-public class ClassName5 : MonoBehaviour
-{
 
+    /// <summary>
+    /// Assembly declaration only
+    /// For Managing API and Libraries Versioning in older unity
+    /// Marks the API as compatible with older versions
+    /// </summary>
+    //[UnityAPICompatibilityVersion("6.0.0", true)]
 
-    //[ImageEffectAllowedInSceneView]//Any Image Effect with this attribute can be rendered into the scene view camera.
+    /// <summary>
+    /// Have Imageeffects to run on the Scene View
+    /// </summary>
+    //[ImageEffectAllowedInSceneView]
 
     //[ImageEffectOpaque]
     //Any Image Effect with this attribute will be rendered after opaque geometry but before transparent geometry
@@ -136,21 +137,46 @@ public class ClassName5 : MonoBehaviour
     //Using this Attribute on an image effect will cause the destination buffer to be an LDR buffer, and switch the rest of the Image Effect pipeline into LDR mode. It is the responsibility of the Image Effect that this Attribute is associated to ensure that the output is in the LDR range.
 
     //[PreferBinarySerialization]
-
-    [Range(0, 1)]//Attribute used to make a float or int variable in a script be restricted to a specific range.
-    public float test;
-}
-
-[RequireComponent(typeof(Rigidbody))]/// automatically adds required components as dependencies.
-public class PlayerScript : MonoBehaviour
-{
-    //RuntimeInitializeOnLoadMethodAttribute
-
-
-
+    // RuntimeInitializeOnLoadMethodAttribute
     //[SharedBetweenAnimatorsAttribute]
-
-
-
-    //UnityAPICompatibilityVersion
 }
+
+/// <summary>
+/// Mark the custom editor to allow editing multiple selected objects
+/// </summary>
+[CanEditMultipleObjects]
+
+/// <summary>
+/// Loads this editor class when unity loads and scripts recompiled
+/// </summary>
+[InitializeOnLoad]
+public class EditorExample : Editor
+{
+    /// <summary>
+    /// Run this method when unity loads
+    /// Usually for Editor methods
+    /// </summary>
+    [InitializeOnLoadMethod]
+    static void OnProjectLoadedInEditor()
+    {
+        Debug.Log("Project loaded in Unity Editor");
+    }
+
+    /// <summary>
+    /// Run this method when unity enter play mode
+    /// Usually for Editor methods
+    /// </summary>
+    [InitializeOnEnterPlayMode]
+    static void OnProjectLoadedInEditor(EnterPlayModeOptions options)
+    {
+        Debug.Log("Entering PlayMode");
+        options.HasFlag(EnterPlayModeOptions.DisableSceneReload);
+    }
+}
+
+/// <summary>
+/// Make the SciptableObject class an asset to be listed in assets/create submenu. 
+/// to be easily created and stored in the project as ".asset" files.
+/// </summary>
+[CreateAssetMenu(fileName = "ScriptableObjectExample", menuName = "ScriptableObject")]
+public class ScriptableObjectExample : ScriptableObject { }
