@@ -19,6 +19,8 @@ public class LayerPropertyDrawer : PropertyDrawer
 {
     public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
     {
+        var targetObject = property.serializedObject.targetObject;
+
         var layers = InternalEditorUtility.layers;
 
         string[] displays = new string[layers.Length];
@@ -40,6 +42,14 @@ public class LayerPropertyDrawer : PropertyDrawer
             int newIndex = EditorGUI.Popup(position, label.text, index, displays);
 
             property.intValue = newIndex;
+        }
+        else
+        {
+            Debug.LogError($"Tag attribute property is not of type \"String\" or \"Integer\"", targetObject);
+
+            EditorGUIUtilities.DrawErrorField(position, property, label);
+
+            return;
         }
     }
 }
