@@ -7,6 +7,8 @@ public class LayerExample : MonoBehaviour
 
     [Layer] public string LayerString;
 
+    [Layer] public bool LayerError;
+
 
     void Update()
     {

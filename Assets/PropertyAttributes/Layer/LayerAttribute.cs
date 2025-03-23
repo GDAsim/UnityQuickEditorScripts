@@ -32,6 +32,7 @@ public class LayerPropertyDrawer : PropertyDrawer
         if(property.propertyType == SerializedPropertyType.String)
         {
             int index = Array.IndexOf(layers, property.stringValue);
+            if (index < 0) index = 0;
             int newIndex = EditorGUI.Popup(position, label.text, index, displays);
 
             property.stringValue = layers[newIndex];
