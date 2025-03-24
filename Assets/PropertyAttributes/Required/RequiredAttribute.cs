@@ -15,7 +15,7 @@ using Object = UnityEngine.Object;
 using UnityEditor;
 
 [CustomPropertyDrawer(typeof(RequiredAttribute))]
-public class RequiredAttributeDrawer : PropertyDrawer
+public class RequiredPropertyDrawer : PropertyDrawer
 {
     static HashSet<(Object, string)> nullObjects = new();
     public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
