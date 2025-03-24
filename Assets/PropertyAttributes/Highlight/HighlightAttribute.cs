@@ -14,8 +14,6 @@
 
 using System;
 using UnityEngine;
-using static HighlightAttribute;
-
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -70,11 +68,11 @@ public class HighlightPropertyDrawer : PropertyDrawer
         if (doHighlight)
         {
             // Draw HighlightRect
-            var padding = EditorGUIUtility.standardVerticalSpacing;
+            var padding = EditorGUIUtility.standardVerticalSpacing / 2f;
             var padding2x = padding * 2;
             Rect highlightRect = new(position.x - padding, position.y - padding,
                 position.width + padding2x, position.height + padding2x);
-            EditorGUI.DrawRect(highlightRect, GetColor(highlightAttribute.Color));
+            EditorGUI.DrawRect(highlightRect, ColorUtilities.GetColor(highlightAttribute.Color));
 
             // Draw Default
             EditorGUI.PropertyField(position, property, label);
@@ -90,36 +88,16 @@ public class HighlightPropertyDrawer : PropertyDrawer
 
 public class HighlightAttribute : PropertyAttribute
 {
-    public readonly HighlightColor Color;
+    public readonly ColorUtilities.ColorEnum Color;
     public readonly string ValueCallback;
     public readonly object[] MethodParameters;
 
     public readonly Action ValidateMethod2;
 
-    public enum HighlightColor
-    {
-        Yellow,
-        Red,
-        Green,
-        Blue,
-    }
-
-    public HighlightAttribute(HighlightColor color = HighlightColor.Yellow, string validateMethod = null, params object[] args)
+    public HighlightAttribute(ColorUtilities.ColorEnum color = ColorUtilities.ColorEnum.Yellow, string validateMethod = null, params object[] args)
     {
         Color = color;
         ValueCallback = validateMethod;
         MethodParameters = args;
-    }
-
-    public static Color GetColor(HighlightColor color)
-    {
-        return color switch
-        {
-            HighlightColor.Yellow => new Color32(255, 255, 0, 255),
-            HighlightColor.Red => new Color32(255, 0, 0, 255),
-            HighlightColor.Green => new Color32(0, 255, 0, 255),
-            HighlightColor.Blue => new Color32(0, 0, 255, 255),
-            _ => new Color32(255, 255, 255, 255),
-        };
     }
 }

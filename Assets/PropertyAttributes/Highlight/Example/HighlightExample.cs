@@ -2,19 +2,19 @@ using UnityEngine;
 
 public class HighlightExample : MonoBehaviour
 {
-    [Highlight(HighlightAttribute.HighlightColor.Red)]
+    [Highlight(ColorUtilities.ColorEnum.Red)]
     [SerializeField] int NoValidationMethod;
 
-    [Highlight(HighlightAttribute.HighlightColor.Green, "isEven", 2)]
+    [Highlight(ColorUtilities.ColorEnum.Green, "isEven", 2)]
     [SerializeField] int ValidationMethodTrue;
 
-    [Highlight(HighlightAttribute.HighlightColor.Red, "isEven", 2)]
+    [Highlight(ColorUtilities.ColorEnum.Red, "isEven", 1)]
     [SerializeField] int ValidationMethodFalse;
 
-    [Highlight(HighlightAttribute.HighlightColor.Red, "ErrorMethod")]
+    [Highlight(ColorUtilities.ColorEnum.Red, "ErrorMethod")]
     [SerializeField] int ValidationErrorMethod;
 
-    [Highlight(HighlightAttribute.HighlightColor.Red, "ErrorMethod2", 1, 2)]
+    [Highlight(ColorUtilities.ColorEnum.Red, "ErrorMethod2", 1, 2)]
     [SerializeField] int ValidationErrorMethod2;
 
     bool isEven(int a)
