@@ -103,9 +103,51 @@ public class MinValuePropertyDrawer : PropertyDrawer
                 property.floatValue = minValue;
             }
         }
+        else if (property.propertyType == SerializedPropertyType.Vector2)
+        {
+            property.vector2Value = Vector2.Max(property.vector2Value, new Vector2(minValue, minValue));
+        }
+        else if (property.propertyType == SerializedPropertyType.Vector3)
+        {
+            property.vector3Value = Vector3.Max(property.vector3Value, new Vector3(minValue, minValue, minValue));
+        }
+        else if (property.propertyType == SerializedPropertyType.Vector4)
+        {
+            property.vector4Value = Vector4.Max(property.vector4Value, new Vector4(minValue, minValue, minValue, minValue));
+        }
+        else if (property.propertyType == SerializedPropertyType.Vector2Int)
+        {
+            property.vector2IntValue = Vector2Int.Max(property.vector2IntValue, new Vector2Int((int)minValue, (int)minValue));
+        }
+        else if (property.propertyType == SerializedPropertyType.Vector3Int)
+        {
+            property.vector3IntValue = Vector3Int.Max(property.vector3IntValue, new Vector3Int((int)minValue, (int)minValue, (int)minValue));
+        }
+        else
+        {
+            Debug.LogError("Supported Types Allowed: Int,Float,Vector,VectorInt", targetObject);
+
+            EditorGUIUtilities.DrawErrorField(position, property, label);
+
+            return;
+        }
 
         // Draw default
-        EditorGUI.PropertyField(position, property, label);
+        EditorGUI.PropertyField(position, property, label, true);
+    }
+
+    public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
+    {
+        if (property.isExpanded)
+        {
+            return 
+                property.CountInProperty() *
+                (EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing);
+        }
+        else
+        {
+            return base.GetPropertyHeight(property, label);
+        }
     }
 }
 #endif

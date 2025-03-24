@@ -6,6 +6,12 @@ public class MinValueExample : MonoBehaviour
     public float floatvar;
 
     [MinValue(10)]
+    public Vector4 Vector4var;
+
+    [MinValue(10)]
+    public Vector3Int Vector3Intvar;
+
+    [MinValue(10)]
     public float[] floatlist;
 
     [MinValue("MinValueMethod")]

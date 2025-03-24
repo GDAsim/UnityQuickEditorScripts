@@ -5,6 +5,12 @@ public class MaxValueExample : MonoBehaviour
     [MaxValue(100)]
     public float floatvar;
 
+    [MaxValue(100)]
+    public Vector4 Vector4var;
+
+    [MaxValue(100)]
+    public Vector3Int Vector3Intvar;
+
     [MaxValue("MaxValueMethod")]
     public float floatCallbackMethod;
 
