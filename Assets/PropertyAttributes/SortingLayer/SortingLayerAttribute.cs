@@ -10,13 +10,10 @@
 using System;
 using UnityEngine;
 using System.Reflection;
-using static UnityEditor.Experimental.GraphView.GraphView;
-using UnityEditorInternal;
-
-
 
 #if UNITY_EDITOR
 using UnityEditor;
+using UnityEditorInternal;
 
 [CustomPropertyDrawer(typeof(SortingLayerAttribute))]
 public class SortingLayerPropertyDrawer : PropertyDrawer

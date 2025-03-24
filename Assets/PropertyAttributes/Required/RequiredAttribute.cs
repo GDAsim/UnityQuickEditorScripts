@@ -3,7 +3,7 @@
  * Custom Attribute to enforces the Assignment of Objects in the inspector and Alerts when you try to enter PlayMode in Editor, and ends playmode.
  * 
  * How To Use:
- * Add [NonNull] on variables you want to enforce. Works on RefrencedObjects
+ * Add [Required] on variables you want to enforce. Works on RefrencedObjects
  * 
  */
 
@@ -14,8 +14,8 @@ using Object = UnityEngine.Object;
 #if UNITY_EDITOR
 using UnityEditor;
 
-[CustomPropertyDrawer(typeof(NonNullAttribute))]
-public class NonNullAttributeDrawer : PropertyDrawer
+[CustomPropertyDrawer(typeof(RequiredAttribute))]
+public class RequiredAttributeDrawer : PropertyDrawer
 {
     static HashSet<(Object, string)> nullObjects = new();
     public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
@@ -61,4 +61,4 @@ public class NonNullAttributeDrawer : PropertyDrawer
 }
 #endif
 
-public class NonNullAttribute : PropertyAttribute { }
+public class RequiredAttribute : PropertyAttribute { }
