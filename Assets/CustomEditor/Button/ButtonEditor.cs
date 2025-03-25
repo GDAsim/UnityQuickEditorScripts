@@ -28,23 +28,24 @@ public class ButtonEditor : Editor
         // Draw Buttons for each button attribute
         for (int i = 0; i < membersWithButtonAttribute.Length; i++)
         {
+            var attribute = membersWithButtonAttribute[i].GetCustomAttribute<ButtonAttribute>();
             var method = membersWithButtonAttribute[i] as MethodInfo;
             var buttonState = editorButtonStates[i];
 
-            DrawButton(targets, method, buttonState);
+            DrawButton(targets, method, attribute, buttonState);
         }
     }
 
-    void DrawButton(object[] invokationTargets, MethodInfo methodInfo, EditorButtonState state)
+    void DrawButton(object[] invokationTargets, MethodInfo methodInfo, ButtonAttribute buttonAttribute, EditorButtonState state)
     {
         EditorGUILayout.BeginHorizontal();
         {
             // 1. Draw Foldout
             var foldoutRect = EditorGUILayout.GetControlRect(GUILayout.Width(10.0f));
-            if (state.Parameters.Length > 0) state.Opened = EditorGUI.Foldout(foldoutRect, state.Opened, "");
+            if (state.Parameters.Length > 0) state.FoldoutOpen = EditorGUI.Foldout(foldoutRect, state.FoldoutOpen, "");
 
             // 2. Draw Button
-            var buttonText = methodInfo.GetMethodDisplayName(true);
+            var buttonText = buttonAttribute.Text ?? methodInfo.GetMethodDisplayName(true);
             if (GUILayout.Button(buttonText, GUILayout.ExpandWidth(true)))
             {
                 foreach (var invokationTarget in invokationTargets)
@@ -66,7 +67,7 @@ public class ButtonEditor : Editor
         EditorGUILayout.EndHorizontal();
 
         // 3. Draw Extras when Foldout Open
-        if (state.Opened)
+        if (state.FoldoutOpen)
         {
             EditorGUI.indentLevel++;
             var parameters = methodInfo.GetParameters();
@@ -81,15 +82,17 @@ public class ButtonEditor : Editor
     }
 }
 
+/// <summary>
+/// internal Class to keep track of button state & extra variables required for button clicks
+/// </summary>
 internal class EditorButtonState
 {
-    public bool Opened;
+    public bool FoldoutOpen;
     public object[] Parameters;
     public EditorButtonState(int numberOfParameters)
     {
         Parameters = new object[numberOfParameters];
     }
-
     public static EditorButtonState[] CreateStates(MemberInfo[] memberInfos)
     {
         var editorButtonStates = new EditorButtonState[memberInfos.Length];
@@ -104,6 +107,3 @@ internal class EditorButtonState
 }
 
 #endif
-
-[AttributeUsage(AttributeTargets.Method)]
-public class ButtonAttribute : PropertyAttribute { }

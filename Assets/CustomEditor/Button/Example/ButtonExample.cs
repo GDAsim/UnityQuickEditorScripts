@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class TestScript : MonoBehaviour 
+public class ButtonExample : MonoBehaviour 
 {
 	public Color TestColor;
 	public Vector4 TestPosition;
