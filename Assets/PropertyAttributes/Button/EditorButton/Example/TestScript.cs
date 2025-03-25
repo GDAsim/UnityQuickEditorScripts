@@ -30,7 +30,8 @@ public class TestScript : MonoBehaviour
 	public IEnumerator CountTo(int max=6) 
 	{
 		int current = 0;
-		while (current < max) {
+		while (current < max) 
+		{
 			Debug.Log (current++);
 			yield return new WaitForSeconds (1.0f);
 		}
