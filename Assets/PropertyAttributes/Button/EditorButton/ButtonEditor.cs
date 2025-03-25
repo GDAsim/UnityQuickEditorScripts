@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Linq;
 using UnityEngine;
-using System.Text;
-using System.Collections.Generic;
 using System.Collections;
 using System.Reflection;
-using static UnityParameterDrawer;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -40,7 +37,6 @@ public class ButtonEditor : Editor
 
     void DrawButton(object[] invokationTargets, MethodInfo methodInfo, EditorButtonState state)
     {
-        bool buttonClicked;
         EditorGUILayout.BeginHorizontal();
         {
             // 1. Draw Foldout
@@ -48,135 +44,40 @@ public class ButtonEditor : Editor
             if (state.Parameters.Length > 0) state.Opened = EditorGUI.Foldout(foldoutRect, state.Opened, "");
 
             // 2. Draw Button
-            buttonClicked = GUILayout.Button(MethodDisplayName(methodInfo), GUILayout.ExpandWidth(true));
+            var buttonText = methodInfo.GetMethodDisplayName(true);
+            if (GUILayout.Button(buttonText, GUILayout.ExpandWidth(true)))
+            {
+                foreach (var invokationTarget in invokationTargets)
+                {
+                    var monoTarget = invokationTarget as MonoBehaviour;
+                    object returnVal = methodInfo.Invoke(monoTarget, state.Parameters);
+
+                    if (returnVal is IEnumerator)
+                    {
+                        monoTarget.StartCoroutine((IEnumerator)returnVal);
+                    }
+                    else if (returnVal != null)
+                    {
+                        Debug.Log("Method call result -> " + returnVal);
+                    }
+                }
+            }
         }
-       
         EditorGUILayout.EndHorizontal();
 
+        // 3. Draw Extras when Foldout Open
         if (state.Opened)
         {
             EditorGUI.indentLevel++;
-            int paramIndex = 0;
-            foreach (ParameterInfo parameterInfo in methodInfo.GetParameters())
+            var parameters = methodInfo.GetParameters();
+            for (int i = 0; i < parameters.Length; i++)
             {
-                object currentVal = state.Parameters[paramIndex];
-                state.Parameters[paramIndex] = DrawParameterInfo(parameterInfo, currentVal);
-                paramIndex++;
+                var parameterInfo = parameters[i];
+                object currentVal = state.Parameters[i];
+                state.Parameters[i] = EditorGUIUtilities.UnityParameterDrawer.DrawParameter(parameterInfo, currentVal);
             }
             EditorGUI.indentLevel--;
         }
-
-        if (buttonClicked)
-        {
-            foreach (var invokationTarget in invokationTargets)
-            {
-                var monoTarget = invokationTarget as MonoBehaviour;
-                object returnVal = methodInfo.Invoke(monoTarget, state.Parameters);
-
-                if (returnVal is IEnumerator)
-                {
-                    monoTarget.StartCoroutine((IEnumerator)returnVal);
-                }
-                else if (returnVal != null)
-                {
-                    Debug.Log("Method call result -> " + returnVal);
-                }
-            }
-        }
-    }
-
-    readonly Dictionary<Type, string> typeDisplayName = new Dictionary<Type, string> {
-
-        {typeof(float),"float"},
-        {typeof(int),"int"},
-        {typeof(string),"string"},
-        {typeof(bool),"bool"},
-        {typeof(Color),"Color"},
-        {typeof(Vector3),"Vector3"},
-        {typeof(Vector2),"Vector2"},
-        {typeof(Quaternion),"Quaternion"}
-    };
-    object GetDefaultValue(ParameterInfo parameter)
-    {
-        bool hasDefaultValue = !DBNull.Value.Equals(parameter.DefaultValue);
-
-        if (hasDefaultValue)
-            return parameter.DefaultValue;
-
-        Type parameterType = parameter.ParameterType;
-        if (parameterType.IsValueType)
-            return Activator.CreateInstance(parameterType);
-
-        return null;
-    }
-
-    object DrawParameterInfo(ParameterInfo parameterInfo, object currentValue)
-    {
-        object paramValue = null;
-
-        EditorGUILayout.BeginHorizontal();
-        EditorGUILayout.LabelField(parameterInfo.Name);
-
-        ParameterDrawer drawer = GetParameterDrawer(parameterInfo);
-        if (currentValue == null) currentValue = GetDefaultValue(parameterInfo);
-        paramValue = drawer.Invoke(parameterInfo, currentValue);
-
-        EditorGUILayout.EndHorizontal();
-
-        return paramValue;
-    }
-
-    ParameterDrawer GetParameterDrawer(ParameterInfo parameter)
-    {
-        Type parameterType = parameter.ParameterType;
-
-        if (typeof(UnityEngine.Object).IsAssignableFrom(parameterType))
-            return DrawUnityEngineObjectParameter;
-
-        if (ParameterDrawers.TryGetValue(parameterType, out ParameterDrawer drawer))
-        {
-            return drawer;
-        }
-
-        return null;
-    }
-
-    static object DrawUnityEngineObjectParameter(ParameterInfo parameterInfo, object val)
-    {
-        return EditorGUILayout.ObjectField((UnityEngine.Object)val, parameterInfo.ParameterType, true);
-    }
-
-
-
-    string MethodDisplayName(MethodInfo method)
-    {
-        var sb = new StringBuilder();
-        sb.Append(method.Name + "(");
-
-        var methodParams = method.GetParameters();
-        foreach (ParameterInfo parameter in methodParams)
-        {
-            sb.Append(MethodParameterDisplayName(parameter));
-            sb.Append(",");
-        }
-
-        if (methodParams.Length > 0)
-        {
-            sb.Remove(sb.Length - 1, 1);
-        }
-
-        sb.Append(")");
-        return sb.ToString();
-    }
-
-    string MethodParameterDisplayName(ParameterInfo parameterInfo)
-    {
-        if (!typeDisplayName.TryGetValue(parameterInfo.ParameterType, out string parameterTypeDisplayName))
-        {
-            parameterTypeDisplayName = parameterInfo.ParameterType.ToString();
-        }
-
-        return parameterTypeDisplayName + " " + parameterInfo.Name;
     }
 }
 
@@ -203,7 +104,6 @@ internal class EditorButtonState
 }
 
 #endif
-
 
 [AttributeUsage(AttributeTargets.Method)]
 public class ButtonAttribute : PropertyAttribute { }

@@ -7,7 +7,7 @@ public class TestScript : MonoBehaviour
 	public Vector4 TestPosition;
 
     [Button]
-    public void EmptyMethod()
+    public void EmptyMethod(GameObject go)
     {
     }
 
@@ -26,6 +26,7 @@ public class TestScript : MonoBehaviour
 		Debug.Log("boolVal "+boolVal);
 	}
 
+	//Run in edit mode
 	[Button]
 	public IEnumerator CountTo(int max=6) 
 	{

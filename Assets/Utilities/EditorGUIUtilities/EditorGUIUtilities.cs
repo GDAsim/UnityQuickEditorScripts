@@ -6,12 +6,9 @@
 #if UNITY_EDITOR
 
 using System;
-using System.Reflection;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.UIElements;
-
-public static class EditorGUIUtilities
+public static partial class EditorGUIUtilities
 {
     /// <summary>
     /// Draw a simple GUI button
