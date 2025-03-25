@@ -1,4 +1,13 @@
-﻿using System;
+﻿/*
+ * About:
+ * CustomEditor to draw buttons in inspector for methods with [Button] Attribute.
+ * 
+ * Notes:
+ * This script extends the default monobehaviour and might have conflicts with other editor scripts that do the same
+ * 
+ */
+
+using System;
 using System.Linq;
 using UnityEngine;
 using System.Collections;

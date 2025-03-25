@@ -1,3 +1,11 @@
+/*
+ * About:
+ * [Button] CustomAttribute.
+ * Currently being used for Tagging purpose for ButtonEditor
+ * See ButtonEditor.cs
+ * 
+ */
+
 using System;
 using UnityEngine;
 
