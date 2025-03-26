@@ -2,6 +2,12 @@
  * About:
  * CustomEditor to draw buttons in inspector for methods with [Button] Attribute.
  * 
+ * How To Use:
+ * Add [Button] to methods
+ * e.g [Button]
+ * e.g [Button("Click Me")]
+ * 
+ * 
  * Notes:
  * This script extends the default monobehaviour and might have conflicts with other editor scripts that do the same
  * 
