@@ -136,7 +136,7 @@ public static partial class EditorGUIUtilities
     /// <summary>
     /// Draw Error Message GUI instead of the regular property field
     /// </summary>
-    public static void DrawErrorField(Rect position, SerializedProperty property, GUIContent label)
+    public static void DrawErrorField(Rect position, SerializedProperty property, GUIContent label, string errorMsg = "Error!")
     {
         var prevColor = GUI.backgroundColor;
 
@@ -145,7 +145,7 @@ public static partial class EditorGUIUtilities
         EditorGUI.LabelField(position, label);
         position.x += EditorGUIUtility.labelWidth;
 
-        EditorGUI.HelpBox(position, "Error!", MessageType.Error);
+        EditorGUI.HelpBox(position, errorMsg, MessageType.Error);
 
         GUI.backgroundColor = prevColor;
     }
