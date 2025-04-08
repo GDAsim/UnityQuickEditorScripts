@@ -37,13 +37,16 @@ public class AssetPathPropertyDrawer : PropertyDrawer
             var assetPathAttribute = attribute as AssetPathAttribute;
             Type objectType = assetPathAttribute.Type;
 
-            if (objectReference == null && !string.IsNullOrEmpty(property.stringValue))
+            Object objectReference = null;
+            if (!string.IsNullOrEmpty(property.stringValue))
             {
                 objectReference = AssetDatabase.LoadAssetAtPath(property.stringValue, objectType);
             }
 
             EditorGUI.BeginChangeCheck();
             {
+                Undo.RecordObject(property.serializedObject.targetObject, $"Modify {property.displayName}");
+                
                 objectReference = EditorGUI.ObjectField(position, label, objectReference, objectType, false);
 
                 if (EditorGUI.EndChangeCheck())

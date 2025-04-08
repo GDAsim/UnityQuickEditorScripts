@@ -152,7 +152,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Prefab: Assets/PropertyAttributes/AssetPath/Example/AssetPathExample.prefab
-  Scene: Assets/PropertyAttributes/AssetPath/Example/AssetPathExample.unity
+  Prefabs:
+  - Assets/PropertyAttributes/AssetPath/Example/AssetPathExample.prefab
+  - 
+  - Assets/PropertyAttributes/AssetPath/Example/AssetPathExample.prefab
+  - 
+  - Assets/PropertyAttributes/AssetPath/Example/AssetPathExample.prefab
+  Scene: 
   integer: 0
 --- !u!4 &9218895170651208368
 Transform:
