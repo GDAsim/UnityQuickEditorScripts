@@ -153,8 +153,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SomeAnimator: {fileID: 1842667702}
-  hash0: -2005463045
-  name0: New Trigger
+  AnimatorParamHash: -572951776
+  AnimatorParamName: FloatParam
 --- !u!4 &1842667701
 Transform:
   m_ObjectHideFlags: 0
