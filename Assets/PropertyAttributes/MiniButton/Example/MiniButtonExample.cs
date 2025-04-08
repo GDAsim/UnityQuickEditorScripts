@@ -1,3 +1,5 @@
+using UnityEditor.ShaderKeywordFilter;
+using UnityEditor;
 using UnityEngine;
 
 public class MiniButtonExample : MonoBehaviour
@@ -11,5 +13,7 @@ public class MiniButtonExample : MonoBehaviour
     public void ClickMeFunc()
     {
         print("Hello World");
+
+        string path = EditorUtility.OpenFolderPanel("Title","test", "defaultname");
     }
 }
