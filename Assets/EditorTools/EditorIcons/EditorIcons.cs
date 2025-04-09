@@ -11,7 +11,7 @@ using System.IO;
 
 public class EditorIcons : EditorWindow
 {
-    [MenuItem("Tools/Editor Icons %e", priority = -1001)]
+    [MenuItem("EditorTools/Editor Icons %e", priority = -1001)]
     public static void EditorIconsOpen()
     {
 #if UNITY_2018
