@@ -6,7 +6,7 @@ public class PathExample : MonoBehaviour
 
     [Path] public string[] SelectPaths;
 
-    //[Path] public int SelectPathError;
+    [Path] public int SelectPathError;
 
-    //[Path] public int[] SelectPathsError;
+    [Path] public int[] SelectPathsError;
 }
