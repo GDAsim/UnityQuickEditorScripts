@@ -11,6 +11,9 @@
  * Notes:
  * This script extends the default monobehaviour and might have conflicts with other editor scripts that do the same
  * 
+ * Sources: 
+ * https://github.com/miguel12345/EditorButton
+ * 
  */
 
 using System;
