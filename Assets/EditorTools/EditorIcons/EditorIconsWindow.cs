@@ -1,4 +1,11 @@
-﻿// https://github.com/nukadelic/UnityEditorIcons/blob/master/EditorIcons.cs
+﻿/*
+ * About:
+ * Provides a custom unity window to display all internal editor icons unity has
+ * 
+ * Source:
+ * https://github.com/nukadelic/UnityEditorIcons/blob/master/EditorIcons.cs
+ * 
+ */
 
 #if UNITY_EDITOR
 
@@ -9,18 +16,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.IO;
 
-public class EditorIcons : EditorWindow
+public class EditorIconsWindow : EditorWindow
 {
-    [MenuItem("EditorTools/Editor Icons %e", priority = -1001)]
-    public static void EditorIconsOpen()
+    [MenuItem("EditorTools/Editor Icons")]
+    public static void ShowWindow()
     {
-#if UNITY_2018
-        var w = GetWindow<EditorIcons>("Editor Icons");
-#else
-        var w = CreateWindow<EditorIcons>("Editor Icons");
-#endif
-        w.ShowUtility();
-        w.minSize = new Vector2(320, 450);
+        var windowName = "Editor Icons";
+        var window = GetWindow<EditorIconsWindow>(windowName);
+
+        window.ShowUtility();
+        window.minSize = new Vector2(320, 450);
     }
 
     static bool viewBigIcons = true;
@@ -39,11 +44,8 @@ public class EditorIcons : EditorWindow
         {
             if (isWide) GUILayout.Space(10);
 
-#if UNITY_2018
-            search = EditorGUILayout.TextField(search, EditorStyles.toolbarTextField);
-#else
             search = EditorGUILayout.TextField(search, EditorStyles.toolbarSearchField);
-#endif
+
             if ( GUILayout.Button(EditorGUIUtility.IconContent("winbtn_mac_close_h"), //SVN_DeletedLocal
                 EditorStyles.toolbarButton, 
                 GUILayout.Width(22))
@@ -77,15 +79,9 @@ public class EditorIcons : EditorWindow
             {
                 try
                 {
-#if UNITY_2018
-                    Texture2D outTex = new Texture2D(
-                        tex.width, tex.height,
-                        tex.format, true);
-#else
                     Texture2D outTex = new Texture2D(
                         tex.width, tex.height,
                         tex.format, tex.mipmapCount, true);
-#endif
 
                     Graphics.CopyTexture(tex, outTex);
 
@@ -128,18 +124,11 @@ public class EditorIcons : EditorWindow
                 }
                 else
                 {
-#if UNITY_2018
-                    Texture2D outTex = new Texture2D(
-                        tex.width, tex.height,
-                        tex.format, true);
-#else
                     Texture2D outTex = new Texture2D(
                         tex.width, tex.height,
                         tex.format, tex.mipmapCount, true);
-#endif
 
                     Graphics.CopyTexture(tex, outTex);
-                        
                         
                     File.WriteAllBytes(path, outTex.EncodeToPNG());
                 }
@@ -151,7 +140,7 @@ public class EditorIcons : EditorWindow
         }
     }
 
-    private void OnEnable()
+    void OnEnable()
     {
         //InitIcons();
         //var all_icons = iconContentListAll.Select(x => x.tooltip).ToArray();
@@ -200,7 +189,7 @@ public class EditorIcons : EditorWindow
         System.GC.Collect();
     }
 
-    private void OnGUI()
+    void OnGUI()
     {
         var ppp = EditorGUIUtility.pixelsPerPoint;
 
