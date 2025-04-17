@@ -20,11 +20,34 @@ public class OpenFolders
         Process.Start(path);
     }
 
+    [MenuItem("EditorTools/Open Folder/Streaming Assets")]
+    private static void OpenStreamingAssets()
+    {
+        string path = Application.streamingAssetsPath;
+        Process.Start(path);
+    }
+
     [MenuItem("EditorTools/Open Folder/Console Log")]
     static void OpenConsoleLog()
     {
         string path = Application.consoleLogPath;
         Process.Start(path);
+    }
+    [MenuItem("EditorTools/Open Folder/Editor Log")]
+    private static void OpenEditorLog()
+    {
+#if UNITY_EDITOR_OSX
+			string rootFolderPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
+			string libraryPath = Path.Combine(rootFolderPath, "Library");
+			string logsFolder = Path.Combine(libraryPath, "Logs");
+			string path = Path.Combine(logsFolder, "Unity");
+            Process.Start(path);
+#elif UNITY_EDITOR_WIN
+        string rootFolderPath = System.Environment.ExpandEnvironmentVariables("%localappdata%");
+        string unityFolder = Path.Combine(rootFolderPath, "Unity");
+        string path = Path.Combine(unityFolder, "Editor");
+        Process.Start(path);
+#endif
     }
 
     [MenuItem("EditorTools/Open Folder/Editor root")]
