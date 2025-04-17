@@ -1,4 +1,13 @@
-
+/*
+ * About:
+ * Provides hotkeys for quick actions in the heirachy window
+ * 
+ * Actions:
+ * 
+ * Move Selections Up - [Ctrl + Alt + W]
+ * Move Selections Down - [Ctrl + Alt + S]
+ * 
+ */
 
 #if UNITY_EDITOR
 
