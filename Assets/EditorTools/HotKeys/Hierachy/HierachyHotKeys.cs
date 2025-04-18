@@ -2,10 +2,15 @@
  * About:
  * Provides hotkeys for quick actions in the heirachy window
  * 
- * Actions:
+ * Features:
+ * Allow multiple selection under the same heirachy level
+ * Allow multiscene selection under the same heirachy level
+ * Input new name after Group
  * 
+ * Actions:
  * Move Selections Up - [Ctrl + Alt + W]
  * Move Selections Down - [Ctrl + Alt + S]
+ * Group Selections - [Ctrl + G]
  * 
  */
 
@@ -14,6 +19,7 @@
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Diagnostics;
 using UnityEngine.SceneManagement;
 
 public class HierachyHotKeys
@@ -22,34 +28,74 @@ public class HierachyHotKeys
     [MenuItem("EditorTools/Hotkeys/Hierachy/Move Up %&w")]
     static void MoveUp()
     {
-        if (Selection.transforms.Length == 0) return;
+        if (Selection.gameObjects.Length == 0) return;
 
-        bool sameParent = true;
-        Transform parent = Selection.transforms[0].parent;
-        for (int i = 1; i < Selection.transforms.Length; i++)
+        // Split Selections into their own scenes
+        var Scenes = Selection.gameObjects.GroupBy(GO => GO.scene).ToArray();
+        foreach (var scene in Scenes)
         {
-            if (Selection.transforms[i].parent != parent) sameParent = false;
-        }
+            var selection = scene.ToArray();
 
-        if (!sameParent) return;
+            // Remove GameObject Selection In Project Folder (Prefab Selection)
+            if (scene.Key.name == null)
+            {
+                var removedList = Selection.gameObjects.ToList();
+                foreach (var item in selection)
+                {
+                    removedList.Remove(item);
+                }
+                Selection.objects = removedList.ToArray();
+                continue;
+            }
 
-        bool isRootSelection = parent == null;
-        if (isRootSelection)
-        {
-            Undo.RecordObjects(Selection.transforms, "Move Up In Hierachy");
-        }
-        else
-        {
-            Undo.RegisterChildrenOrderUndo(parent, "Move Up In Hierachy");
-        }
+            var sameParent = true;
+            var parent = selection[0].transform.parent;
+            for (int i = 1; i < selection.Length; i++)
+            {
+                if (selection[i].transform.parent != parent)
+                {
+                    sameParent = false;
+                    break;
+                }
+            }
 
-        var orderedSelection = Selection.transforms.OrderBy(t => t.GetSiblingIndex()).ToArray();
-        for (int i = 0; i < orderedSelection.Length; i++)
-        {
-            var sibilingIndex = orderedSelection[i].GetSiblingIndex();
-            if (sibilingIndex == i) continue;
+            if (!sameParent)
+            {
+                var removedList = Selection.gameObjects.ToList();
+                foreach (var item in selection)
+                {
+                    removedList.Remove(item);
+                }
+                Selection.objects = removedList.ToArray();
+                continue;
+            }
 
-            orderedSelection[i].SetSiblingIndex(sibilingIndex - 1);
+            int lastIndex = 0;
+            bool isRootSelection = parent == null;
+            if (isRootSelection)
+            {
+                Undo.RegisterCompleteObjectUndo(selection, "Move Up In Hierachy");
+                lastIndex = SceneManager.GetActiveScene().GetRootGameObjects().Length - 1;
+            }
+            else
+            {
+                Undo.RegisterChildrenOrderUndo(parent, "Move Up In Hierachy");
+                lastIndex = parent.childCount - 1;
+            }
+
+            bool hasChanged = false;
+            var orderedSelection = selection.OrderBy(t => t.transform.GetSiblingIndex()).ToArray();
+            for (int i = 0; i < orderedSelection.Length; i++)
+            {
+                var sibilingIndex = orderedSelection[i].transform.GetSiblingIndex();
+                if (sibilingIndex == i) continue;
+
+                hasChanged = true;
+                orderedSelection[i].transform.SetSiblingIndex(sibilingIndex - 1);
+            }
+
+            // Fix for some reason, unity records undo even though no setsibling is called
+            if (!hasChanged) Undo.RevertAllInCurrentGroup();
         }
     }
 
@@ -57,37 +103,123 @@ public class HierachyHotKeys
     [MenuItem("EditorTools/Hotkeys/Hierachy/Move down %&s")]
     static void MoveDown()
     {
-        if (Selection.activeGameObject == null) return;
+        if (Selection.gameObjects.Length == 0) return;
 
-        bool sameParent = true;
-        Transform parent = Selection.transforms[0].parent;
-        for (int i = 1; i < Selection.transforms.Length; i++)
+        // Split Selections into their own scenes
+        var Scenes = Selection.gameObjects.GroupBy(GO => GO.scene).ToArray();
+        foreach (var scene in Scenes)
         {
-            if (Selection.transforms[i].parent != parent) sameParent = false;
+            var selection = scene.ToArray();
+
+            // Remove GameObject Selection In Project Folder (Prefab Selection)
+            if (scene.Key.name == null)
+            {
+                var removedList = Selection.gameObjects.ToList();
+                foreach (var item in selection)
+                {
+                    removedList.Remove(item);
+                }
+                Selection.objects = removedList.ToArray();
+                continue;
+            }
+
+            var sameParent = true;
+            var parent = selection[0].transform.parent;
+            for (int i = 1; i < selection.Length; i++)
+            {
+                if (selection[i].transform.parent != parent)
+                {
+                    sameParent = false;
+                    break;
+                }
+            }
+
+            if (!sameParent)
+            {
+                var removedList = Selection.gameObjects.ToList();
+                foreach (var item in selection)
+                {
+                    removedList.Remove(item);
+                }
+                Selection.objects = removedList.ToArray();
+                continue;
+            }
+
+            int lastIndex = 0;
+            bool isRootSelection = parent == null;
+            if (isRootSelection)
+            {
+                Undo.RegisterCompleteObjectUndo(selection, "Move Down In Hierachy");
+                lastIndex = SceneManager.GetActiveScene().GetRootGameObjects().Length - 1;
+            }
+            else
+            {
+                Undo.RegisterChildrenOrderUndo(parent, "Move Down In Hierachy");
+                lastIndex = parent.childCount - 1;
+            }
+
+            var hasChanged = false;
+            var orderedSelection = selection.OrderByDescending(t => t.transform.GetSiblingIndex()).ToArray();
+            for (int i = 0; i < orderedSelection.Length; i++)
+            {
+                var sibilingIndex = orderedSelection[i].transform.GetSiblingIndex();
+                if (sibilingIndex == lastIndex - i) continue;
+
+                hasChanged = true;
+                orderedSelection[i].transform.SetSiblingIndex(sibilingIndex + 1);
+            }
+
+            // Fix for some reason, unity records undo even though no setsibling is called
+            if (!hasChanged) Undo.RevertAllInCurrentGroup();
         }
+    }
 
-        if (!sameParent) return;
+    static void TriggerRenameCommand()
+    {
 
-        int lastIndex = 0;
-        bool isRootSelection = parent == null;
-        if(isRootSelection)
+    }
+
+    private static double renameTime;
+
+    [MenuItem("EditorTools/Hotkeys/Hierachy/Group %g")]
+    static void Group()
+    {
+        if (Selection.transforms.Length > 0)
         {
-            Undo.RecordObjects(Selection.transforms, "Move Down In Hierachy");
-            lastIndex = SceneManager.GetActiveScene().GetRootGameObjects().Length - 1;
+            GameObject groupGO = new GameObject("New Group");
+
+            Vector3 centerPos = Vector3.zero;
+            foreach (Transform g in Selection.transforms)
+            {
+                centerPos += g.transform.position;
+            }
+            groupGO.transform.position = centerPos / Selection.transforms.Length;
+
+            Undo.RegisterCreatedObjectUndo(groupGO, "Create New GameObject Group");
+            foreach (GameObject s in Selection.gameObjects)
+            {
+                Undo.SetTransformParent(s.transform, groupGO.transform, "Reparent to Group");
+            }
+
+            Selection.activeObject = groupGO;
+
+            renameTime = EditorApplication.timeSinceStartup + 0.2;
+            EditorApplication.update += TriggerRename;
         }
-        else
-        {
-            Undo.RegisterChildrenOrderUndo(parent, "Move Down In Hierachy");
-            lastIndex = parent.childCount - 1;
-        }
+    }
 
-        var orderedSelection = Selection.transforms.OrderByDescending(t => t.GetSiblingIndex()).ToArray();
-        for (int i = 0; i < orderedSelection.Length; i++)
+    static void TriggerRename()
+    {
+        if (EditorApplication.timeSinceStartup >= renameTime)
         {
-            var sibilingIndex = orderedSelection[i].GetSiblingIndex();
-            if (sibilingIndex == lastIndex - i) continue;
+            var e = new Event
+            {
+                keyCode = KeyCode.F2,
+                type = EventType.KeyDown
+            };
+            EditorWindow.focusedWindow.SendEvent(e);
 
-            orderedSelection[i].SetSiblingIndex(sibilingIndex + 1);
+            EditorApplication.update -= TriggerRename;
         }
     }
 }
