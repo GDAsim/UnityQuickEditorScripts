@@ -15,12 +15,10 @@ using UnityEngine;
 [InitializeOnLoad]
 public static class HierachyHighlightLoader
 {
-    static HierachyHighlightLoader()
-    {
-        EditorApplication.hierarchyWindowItemOnGUI += HierarchyWindowOnGUI;
-    }
+    const int Priority = 100;
+    static HierachyHighlightLoader() => CustomHierarchyItemsLoader.Add(OnGUI, Priority);
 
-    static void HierarchyWindowOnGUI(int instanceID, Rect selectionRect)
+    static void OnGUI(int instanceID, Rect selectionRect)
     {
         UnityEngine.Object instance = EditorUtility.InstanceIDToObject(instanceID);
 
