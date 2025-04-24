@@ -1,4 +1,10 @@
-﻿#if UNITY_EDITOR
+﻿/* 
+ * About:
+ * Script that adds modifies the drawing of Hierachy Window Items
+ * Highlights the hierachy item based on the gameobject monobehaviour component "HierachyHighlight"
+ */
+
+#if UNITY_EDITOR
 
 using System;
 using System.Linq;

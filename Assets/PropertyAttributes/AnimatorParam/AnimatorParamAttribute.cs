@@ -12,12 +12,11 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Reflection;
-
-using UnityEditor.Animations;
 using System.Linq;
 
 #if UNITY_EDITOR
 using UnityEditor;
+using UnityEditor.Animations;
 
 [CustomPropertyDrawer(typeof(AnimatorParamAttribute))]
 public class AnimatorParamPropertyDrawer : PropertyDrawer

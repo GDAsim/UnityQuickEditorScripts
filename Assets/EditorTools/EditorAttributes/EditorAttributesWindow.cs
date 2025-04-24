@@ -10,12 +10,13 @@
  * 
  */
 
+#if UNITY_EDITOR
+
 using System;
 using System.Text;
 using UnityEditor;
 using UnityEngine;
 
-[ExecuteInEditMode]
 public class EditorAttributesWindow : EditorWindow
 {
     [MenuItem("EditorTools/Editor Attributes")]
@@ -88,3 +89,4 @@ public class EditorAttributesWindow : EditorWindow
         }
     }
 }
+#endif

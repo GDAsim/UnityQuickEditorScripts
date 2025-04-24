@@ -1,5 +1,3 @@
-using UnityEditor.ShaderKeywordFilter;
-using UnityEditor;
 using UnityEngine;
 
 public class MiniButtonExample : MonoBehaviour
