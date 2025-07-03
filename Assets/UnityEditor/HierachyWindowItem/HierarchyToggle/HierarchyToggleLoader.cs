@@ -22,7 +22,7 @@ public static class HierarchyToggleLoader
         if (gameObject == null) return;
 
         var rect = new Rect
-            (selectionRect.x + selectionRect.width - 8f,
+            (selectionRect.x + selectionRect.width - 16f,
             selectionRect.y, 16f, 16f);
 
         bool isactive = EditorGUI.Toggle(rect, gameObject.activeSelf);
