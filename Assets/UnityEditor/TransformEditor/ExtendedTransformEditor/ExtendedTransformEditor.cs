@@ -232,19 +232,9 @@ public class ExtendedTransformEditor : Editor
                     "Scale : " + scaleClipboard.Value.ToString("f2"), helpboxStyle);
                 }
             }
-
-
-            // Shortcuts GUI - Related to InspectorShortcuts.cs https://github.com/VoxelBoy/Useful-Unity-Scripts/blob/master/InspectorShortcuts.cs
-            if (EditorPrefs.GetBool(SHOW_SHORTCUTS_KEY))
-            {
-                EditorGUILayout.HelpBox("Inspector shortcuts :\n" +
-                "Toggle inspector lock : Ctrl + Shift + L\n" +
-                "Toggle inspector mode : Ctrl + Shift + D", MessageType.None);
-            }
         }
         Rect endRect = GUILayoutUtility.GetLastRect();
         endRect.y += endRect.height;
-
 
         #region Context Menu
         Rect componentRect = new Rect(beginRect.x, beginRect.y, beginRect.width, endRect.y - beginRect.y);
