@@ -24,7 +24,7 @@ public class CustomEditorTemplate : MonoBehaviour
     [Header("For FreeMoveHandle")]
     [SerializeField] HandlesCapType capType = HandlesCapType.Sphere;
     [SerializeField] float size = 1;
-    [SerializeField] Vector3 ctrlsnap = new Vector3(0.5f, 0.5f, 0.5f);
+    [SerializeField] Vector3 ctrlSnap = new Vector3(0.5f, 0.5f, 0.5f);
 
     void Update()
     {
