@@ -21,10 +21,17 @@ public class CustomEditorTemplate : MonoBehaviour
     [Header("For Handles")]
     [SerializeField] Color handlesColor = Color.coral;
 
-    [Header("For FreeMoveHandle")]
+    [Header("For Free Move Handle")]
     [SerializeField] HandlesCapType capType = HandlesCapType.Sphere;
-    [SerializeField] float size = 1;
-    [SerializeField] Vector3 ctrlSnap = new Vector3(0.5f, 0.5f, 0.5f);
+    [SerializeField] float freeMoveSize = 1;
+    [SerializeField] Vector3 freeMoveSnap = new Vector3(0.5f, 0.5f, 0.5f);
+
+    [Header("For Disc Handle")]
+    [SerializeField] float discSize = 1;
+
+    [Header("For Button Handle")]
+    [SerializeField] float buttonSize = 1;
+
 
     void Update()
     {
