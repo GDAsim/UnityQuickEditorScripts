@@ -32,6 +32,7 @@ public class CustomEditorTemplate : MonoBehaviour
     [Header("For Button Handle")]
     [SerializeField] float buttonSize = 1;
 
+    [SerializeField] Texture3D texture3D;
 
     void Update()
     {

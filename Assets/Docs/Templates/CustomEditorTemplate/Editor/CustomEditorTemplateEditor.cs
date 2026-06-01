@@ -1,14 +1,8 @@
-using System;
-using System.Drawing;
-using System.Reflection;
+using System.Drawing.Drawing2D;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.AdaptivePerformance.Provider;
-using UnityEngine.UI;
 using UnityEngine.UIElements;
-using static GluonGui.WorkspaceWindow.Views.WorkspaceExplorer.Configuration.ConfigurationTreeNodeCheck;
 using static UnityEditor.PlayerSettings;
-using static UnityEngine.Audio.ProcessorInstance;
 using static UnityEngine.Rendering.VirtualTexturing.Debugging;
 
 [CustomEditor(typeof(CustomEditorTemplate), true)]
@@ -27,8 +21,6 @@ public class CustomEditorTemplateEditor : Editor
     {
         var script = (CustomEditorTemplate)target;
 
-
-
         var handlesExampleProp = serializedObject.FindProperty("handlesExampleGO");
         if (handlesExampleProp == null) return;
 
@@ -36,7 +28,7 @@ public class CustomEditorTemplateEditor : Editor
         if (handlesExampleProp.arraySize >= 0)
         {
             var handleGOProp = handlesExampleProp.GetArrayElementAtIndex(0);
-            var handleGO = handleGOProp.objectReferenceValue as GameObject;
+            var handleGO = handleGOProp?.objectReferenceValue as GameObject;
             if (handleGO != null)
             {
                 EditorGUI.BeginChangeCheck();
@@ -62,7 +54,7 @@ public class CustomEditorTemplateEditor : Editor
         if (handlesExampleProp.arraySize >= 1)
         {
             var handleGOProp = handlesExampleProp.GetArrayElementAtIndex(1);
-            var handleGO = handleGOProp.objectReferenceValue as GameObject;
+            var handleGO = handleGOProp?.objectReferenceValue as GameObject;
             if (handleGO != null)
             {
                 EditorGUI.BeginChangeCheck();
@@ -80,7 +72,7 @@ public class CustomEditorTemplateEditor : Editor
         if (handlesExampleProp.arraySize >= 2)
         {
             var handleGOProp = handlesExampleProp.GetArrayElementAtIndex(2);
-            var handleGO = handleGOProp.objectReferenceValue as GameObject;
+            var handleGO = handleGOProp?.objectReferenceValue as GameObject;
             if (handleGO != null)
             {
                 EditorGUI.BeginChangeCheck();
@@ -98,7 +90,7 @@ public class CustomEditorTemplateEditor : Editor
         if (handlesExampleProp.arraySize >= 3)
         {
             var handleGOProp = handlesExampleProp.GetArrayElementAtIndex(3);
-            var handleGO = handleGOProp.objectReferenceValue as GameObject;
+            var handleGO = handleGOProp?.objectReferenceValue as GameObject;
             if (handleGO != null)
             {
                 EditorGUI.BeginChangeCheck();
@@ -119,7 +111,7 @@ public class CustomEditorTemplateEditor : Editor
         if (handlesExampleProp.arraySize >= 4)
         {
             var handleGOProp = handlesExampleProp.GetArrayElementAtIndex(4);
-            var handleGO = handleGOProp.objectReferenceValue as GameObject;
+            var handleGO = handleGOProp?.objectReferenceValue as GameObject;
             if (handleGO != null)
             {
                 EditorGUI.BeginChangeCheck();
@@ -146,7 +138,7 @@ public class CustomEditorTemplateEditor : Editor
         if (handlesExampleProp.arraySize >= 5)
         {
             var handleGOProp = handlesExampleProp.GetArrayElementAtIndex(5);
-            var handleGO = handleGOProp.objectReferenceValue as GameObject;
+            var handleGO = handleGOProp?.objectReferenceValue as GameObject;
             if (handleGO != null)
             {
                 EditorGUI.BeginChangeCheck();
@@ -167,7 +159,7 @@ public class CustomEditorTemplateEditor : Editor
         if (handlesExampleProp.arraySize >= 6)
         {
             var handleGOProp = handlesExampleProp.GetArrayElementAtIndex(6);
-            var handleGO = handleGOProp.objectReferenceValue as GameObject;
+            var handleGO = handleGOProp?.objectReferenceValue as GameObject;
             if (handleGO != null)
             {
                 EditorGUI.BeginChangeCheck();
@@ -187,7 +179,7 @@ public class CustomEditorTemplateEditor : Editor
         if (handlesExampleProp.arraySize >= 7)
         {
             var handleGOProp = handlesExampleProp.GetArrayElementAtIndex(7);
-            var handleGO = handleGOProp.objectReferenceValue as GameObject;
+            var handleGO = handleGOProp?.objectReferenceValue as GameObject;
             if (handleGO != null)
             {
                 EditorGUI.BeginChangeCheck();
@@ -211,7 +203,7 @@ public class CustomEditorTemplateEditor : Editor
         if (handlesExampleProp.arraySize >= 8)
         {
             var handleGOProp = handlesExampleProp.GetArrayElementAtIndex(8);
-            var handleGO = handleGOProp.objectReferenceValue as GameObject;
+            var handleGO = handleGOProp?.objectReferenceValue as GameObject;
             if (handleGO != null)
             {
                 EditorGUI.BeginChangeCheck();
@@ -234,7 +226,7 @@ public class CustomEditorTemplateEditor : Editor
         if (handlesExampleProp.arraySize >= 9)
         {
             var handleGOProp = handlesExampleProp.GetArrayElementAtIndex(9);
-            var handleGO = handleGOProp.objectReferenceValue as GameObject;
+            var handleGO = handleGOProp?.objectReferenceValue as GameObject;
             if (handleGO != null)
             {
                 EditorGUI.BeginChangeCheck();
@@ -256,7 +248,7 @@ public class CustomEditorTemplateEditor : Editor
         if (handlesExampleProp.arraySize >= 10)
         {
             var handleGOProp = handlesExampleProp.GetArrayElementAtIndex(10);
-            var handleGO = handleGOProp.objectReferenceValue as GameObject;
+            var handleGO = handleGOProp?.objectReferenceValue as GameObject;
             if (handleGO != null)
             {
                 EditorGUI.BeginChangeCheck();
@@ -274,7 +266,7 @@ public class CustomEditorTemplateEditor : Editor
         if (handlesExampleProp.arraySize >= 11)
         {
             var handleGOProp = handlesExampleProp.GetArrayElementAtIndex(11);
-            var handleGO = handleGOProp.objectReferenceValue as GameObject;
+            var handleGO = handleGOProp?.objectReferenceValue as GameObject;
             if (handleGO != null)
             {
                 EditorGUI.BeginChangeCheck();
@@ -292,33 +284,215 @@ public class CustomEditorTemplateEditor : Editor
             }
         }
 
-        // not interactable
-        //Handles.DrawSolidDisc(handleGO.transform.position, axis, size);
-        //Handles.DrawWireDisc(handleGO.transform.position, axis, size);
-        //Handles.DrawWireArc 
-        //Handles.DrawWireCube 
-        //Handles.DrawSelectionFrame 
-        //Handles.DrawSolidArc
+        // Draw Non-Interactable
 
-        //DrawLine
-        //DrawLines
-        //DrawDottedLine
-        //DrawDottedLines
-        //Handles.DrawPolyLine 
-        //Handles.DrawAAPolyLine
-        //Handles.DrawBezier //MakeBezierPoints  
+        // Draw Circles
+        if (handlesExampleProp.arraySize >= 12)
+        {
+            var handleGOProp = handlesExampleProp.GetArrayElementAtIndex(12);
+            var handleGO = handleGOProp?.objectReferenceValue as GameObject;
+            if (handleGO != null)
+            {
+                var size = HandleUtility.GetHandleSize(handleGO.transform.position) / 2;
+                var thickness = 1;
 
-        //Handles.DrawAAConvexPolygon
-        //Handles.DrawOutline
+                var pos = handleGO.transform.position;
+                var offsetPos = new Vector3(0, 0, 0);
 
-        //Handles.DrawSolidRectangleWithOutline
+                Handles.DrawWireDisc(pos + offsetPos, handleGO.transform.up, size, thickness);
 
-        //DrawCamera
-        //DrawTexture3DSDF 
-        //DrawTexture3DSlice
-        //DrawTexture3DVolume 
+                offsetPos.y += size;
+                Handles.DrawWireArc(pos + offsetPos, Vector3.up, handleGO.transform.forward, 270f, size, thickness);
 
+                offsetPos.y += size;
+                Handles.DrawSolidDisc(pos + offsetPos, Vector3.up, size);
 
+                offsetPos.y += size;
+                Handles.DrawSolidArc(pos + offsetPos, Vector3.up, handleGO.transform.forward, 270f, size);
+            }
+        }
+        if (handlesExampleProp.arraySize >= 15)
+        {
+            var handleGOProp = handlesExampleProp.GetArrayElementAtIndex(15);
+            var handleGO = handleGOProp?.objectReferenceValue as GameObject;
+            if (handleGO != null)
+            {
+                var size = HandleUtility.GetHandleSize(handleGO.transform.position);
+                Handles.DrawWireCube(handleGO.transform.position, size * Vector3.one);
+            }
+        }
+        if (handlesExampleProp.arraySize >= 16)
+        {
+            var handleGOProp = handlesExampleProp.GetArrayElementAtIndex(16);
+            var handleGO = handleGOProp?.objectReferenceValue as GameObject;
+            if (handleGO != null)
+            {
+                var size = HandleUtility.GetHandleSize(handleGO.transform.position);
+                int controlID = GUIUtility.GetControlID(FocusType.Passive);
+                Handles.DrawSelectionFrame(controlID, handleGO.transform.position, handleGO.transform.rotation, size, EventType.Repaint);
+            }
+        }
+
+        // Draw lines
+        if (handlesExampleProp.arraySize >= 18)
+        {
+            var handleGOProp = handlesExampleProp.GetArrayElementAtIndex(18);
+            var handleGO = handleGOProp.objectReferenceValue as GameObject;
+            if (handleGO != null)
+            {
+                var pos = handleGO.transform.position + new Vector3(-0.5f, 0, -0.5f);
+                var size = HandleUtility.GetHandleSize(handleGO.transform.position) / 2;
+                var thickness = 1;
+                var seperationSize = 2 / size;
+
+                var p1 = pos;
+                var p2 = pos + new Vector3(0, 0, 1);
+                Handles.DrawLine(p1, p2, thickness);
+
+                p1.y += size;
+                p2.y += size;
+                Handles.DrawDottedLine(p1, p2, seperationSize);
+
+                p1 = pos + new Vector3(0, size * 2, 0);
+                p2 = pos + new Vector3(0, size * 2, 1);
+                var p3 = pos + new Vector3(1, size * 2, 1);
+                var p4 = pos + new Vector3(1, size * 2, 0);
+                var lines = new[]
+                {
+                    p1, p2,
+                    p2, p3,
+                    p3, p4,
+                };
+                Handles.DrawLines(lines);
+
+                p1 = pos + new Vector3(0, size * 3, 0);
+                p2 = pos + new Vector3(0, size * 3, 1);
+                p3 = pos + new Vector3(1, size * 3, 1);
+                p4 = pos + new Vector3(1, size * 3, 0);
+                lines = new[]
+                {
+                    p1, p2,
+                    p2, p3,
+                    p3, p4,
+                };
+                Handles.DrawDottedLines(lines, seperationSize);
+
+                p1 = pos + new Vector3(0, size * 4, 0);
+                p2 = pos + new Vector3(0, size * 4, 1);
+                p3 = pos + new Vector3(1, size * 4, 1);
+                p4 = pos + new Vector3(1, size * 4, 0);
+                lines = new[]
+                {
+                    p1, p2, p3, p4,
+                };
+                Handles.DrawPolyLine(lines);
+
+                p1 = pos + new Vector3(0, size * 5, 0);
+                p2 = pos + new Vector3(0, size * 5, 1);
+                p3 = pos + new Vector3(1, size * 5, 1);
+                p4 = pos + new Vector3(1, size * 5, 0);
+                lines = new[]
+                {
+                    p1, p2, p3, p4,
+                };
+                Handles.DrawAAPolyLine(thickness, lines);
+            }
+        }
+        // Draw Bezier
+        if (handlesExampleProp.arraySize >= 19)
+        {
+            var handleGOProp = handlesExampleProp.GetArrayElementAtIndex(19);
+            var handleGO = handleGOProp.objectReferenceValue as GameObject;
+            if (handleGO != null)
+            {
+                var pos = handleGO.transform.position + new Vector3(-0.5f, 0, -0.5f);
+                var size = HandleUtility.GetHandleSize(handleGO.transform.position);
+                var thickness = 2 / size;
+
+                var p1 = pos;
+                var p2 = pos + new Vector3(0.2f, 1, 0);
+                var p3 = pos + new Vector3(0.8f, -1, 0);
+                var p4 = pos + new Vector3(1, 0, 0);
+                var color = Color.red;
+                Handles.DrawBezier(
+                   p1, p4, p2, p3,
+                   color, null, thickness);
+            }
+        }
+        // Draw AAConvexPolygon
+        if (handlesExampleProp.arraySize >= 20)
+        {
+            var handleGOProp = handlesExampleProp.GetArrayElementAtIndex(20);
+            var handleGO = handleGOProp.objectReferenceValue as GameObject;
+            if (handleGO != null)
+            {
+                var pos = handleGO.transform.position;
+                var size = HandleUtility.GetHandleSize(handleGO.transform.position);
+
+                Handles.DrawAAConvexPolygon(
+                    pos + Vector3.forward * size,
+                    pos + Vector3.right * size,
+                    pos + Vector3.back * size,
+                    pos + Vector3.left * size);
+            }
+        }
+
+        // Draw outlines
+        if (handlesExampleProp.arraySize >= 21)
+        {
+            var handleGOProp = handlesExampleProp.GetArrayElementAtIndex(21);
+            var handleGO = handleGOProp.objectReferenceValue as GameObject;
+            if (handleGO != null)
+            {
+                var color = Color.red;
+                var opacity = 0.5f;
+                Handles.DrawOutline(new[] { handleGO }, color, opacity);
+
+                var pos = handleGO.transform.position;
+                var size = HandleUtility.GetHandleSize(pos);
+                var rectVerts = new[]
+                {
+                    pos + new Vector3(-0.5f, 0, -0.5f) * size,
+                    pos + new Vector3(0.5f, 0, -0.5f) * size,
+                    pos + new Vector3(0.5f, 0, 0.5f) * size,
+                    pos + new Vector3(-0.5f, 0, 0.5f) * size
+                };
+                Handles.DrawSolidRectangleWithOutline(rectVerts, new Color(0, 1, 0, 0.2f), Color.green);
+            }
+        }
+
+        // DrawTexture3DSDF
+        if (handlesExampleProp.arraySize >= 23)
+        {
+            var handleGOProp = handlesExampleProp.GetArrayElementAtIndex(23);
+            var handleGO = handleGOProp.objectReferenceValue as GameObject;
+            if (handleGO != null)
+            {
+                var texture3DProp = serializedObject.FindProperty("texture3D");
+                var texture = texture3DProp?.objectReferenceValue as Texture3D;
+                if (texture == null) return;
+
+                var size = 1;
+                var step = 0.5f;
+
+                var oldMatrix = Handles.matrix;
+
+                var matrix = handleGO.transform.localToWorldMatrix;
+                var pos = new Vector4(handleGO.transform.position.x, handleGO.transform.position.y, handleGO.transform.position.z, 1);
+                Handles.matrix = matrix;
+                Handles.DrawTexture3DSDF(texture, step);
+
+                matrix.SetColumn(3, pos + new Vector4(0, size, 0, 0));
+                Handles.matrix = matrix;
+                Handles.DrawTexture3DSlice(texture, Vector3.zero);
+
+                matrix.SetColumn(3, pos + new Vector4(0, size * 2, 0, 0));
+                Handles.matrix = matrix;
+                Handles.DrawTexture3DVolume(texture, 0.5f);
+
+                Handles.matrix = oldMatrix;
+            }
+        }
 
         //preselectionColor
         //selectedColor
