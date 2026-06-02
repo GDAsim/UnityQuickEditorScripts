@@ -1,13 +1,9 @@
-using System.Drawing.Drawing2D;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.UIElements;
-using static UnityEditor.PlayerSettings;
-using static UnityEngine.Rendering.VirtualTexturing.Debugging;
 
-[CustomEditor(typeof(CustomEditorTemplate), true)]
+[CustomEditor(typeof(UnityEditorHandlesTemplate), true)]
 
-public class CustomEditorTemplateEditor : Editor
+public class UnityEditorHandlesTemplateEditor : Editor
 {
     void OnEnable()
     {
@@ -19,7 +15,7 @@ public class CustomEditorTemplateEditor : Editor
     }
     void OnSceneGUI()
     {
-        var script = (CustomEditorTemplate)target;
+        var script = (UnityEditorHandlesTemplate)target;
 
         var handlesExampleProp = serializedObject.FindProperty("handlesExampleGO");
         if (handlesExampleProp == null) return;
@@ -121,7 +117,7 @@ public class CustomEditorTemplateEditor : Editor
                 var capTypeProp = serializedObject.FindProperty("capType");
                 var sizeProp = serializedObject.FindProperty("freeMoveSize");
                 var snapProp = serializedObject.FindProperty("freeMoveSnap");
-                var capType = GetHandlesCapFunction((CustomEditorTemplate.HandlesCapType)capTypeProp.intValue);
+                var capType = GetHandlesCapFunction((UnityEditorHandlesTemplate.HandlesCapType)capTypeProp.intValue);
                 var size = sizeProp.floatValue;
                 var snap = snapProp.vector3Value;
 
@@ -502,18 +498,18 @@ public class CustomEditorTemplateEditor : Editor
         //elementSelectionColor
     }
 
-    Handles.CapFunction GetHandlesCapFunction(CustomEditorTemplate.HandlesCapType capType)
+    Handles.CapFunction GetHandlesCapFunction(UnityEditorHandlesTemplate.HandlesCapType capType)
     {
         return capType switch
         {
-            CustomEditorTemplate.HandlesCapType.Arrow => Handles.ArrowHandleCap,
-            CustomEditorTemplate.HandlesCapType.Circle => Handles.CircleHandleCap,
-            CustomEditorTemplate.HandlesCapType.Cone => Handles.ConeHandleCap,
-            CustomEditorTemplate.HandlesCapType.Cube => Handles.CubeHandleCap,
-            CustomEditorTemplate.HandlesCapType.Cylinder => Handles.CylinderHandleCap,
-            CustomEditorTemplate.HandlesCapType.Dot => Handles.DotHandleCap,
-            CustomEditorTemplate.HandlesCapType.Rectangle => Handles.RectangleHandleCap,
-            CustomEditorTemplate.HandlesCapType.Sphere => Handles.SphereHandleCap,
+            UnityEditorHandlesTemplate.HandlesCapType.Arrow => Handles.ArrowHandleCap,
+            UnityEditorHandlesTemplate.HandlesCapType.Circle => Handles.CircleHandleCap,
+            UnityEditorHandlesTemplate.HandlesCapType.Cone => Handles.ConeHandleCap,
+            UnityEditorHandlesTemplate.HandlesCapType.Cube => Handles.CubeHandleCap,
+            UnityEditorHandlesTemplate.HandlesCapType.Cylinder => Handles.CylinderHandleCap,
+            UnityEditorHandlesTemplate.HandlesCapType.Dot => Handles.DotHandleCap,
+            UnityEditorHandlesTemplate.HandlesCapType.Rectangle => Handles.RectangleHandleCap,
+            UnityEditorHandlesTemplate.HandlesCapType.Sphere => Handles.SphereHandleCap,
             _ => Handles.SphereHandleCap,
         };
     }

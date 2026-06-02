@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [ExecuteInEditMode]
-public class CustomEditorTemplate : MonoBehaviour
+public class UnityEditorHandlesTemplate : MonoBehaviour
 {
     [SerializeField] List<GameObject> handlesExampleGO = new List<GameObject>();
 

@@ -1984,7 +1984,7 @@ GameObject:
   - component: {fileID: 1735415449}
   - component: {fileID: 1735415448}
   m_Layer: 0
-  m_Name: CustomEditorTemplate
+  m_Name: UnityEditorHandlesTemplate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
