@@ -31,7 +31,6 @@ public class UnityEditorHandlesTemplateEditor : Editor
 
                 Handles.Label(handleGO.transform.position, "Transform Handle");
 
-                float size = HandleUtility.GetHandleSize(handleGO.transform.position);
                 var pos = handleGO.transform.position;
                 var rot = handleGO.transform.rotation;
                 var scale = handleGO.transform.localScale;
@@ -82,7 +81,7 @@ public class UnityEditorHandlesTemplateEditor : Editor
             }
         }
 
-        //// Draw Scale Handle
+        // Draw Scale Handle
         if (handlesExampleProp.arraySize >= 3)
         {
             var handleGOProp = handlesExampleProp.GetArrayElementAtIndex(3);
@@ -141,7 +140,7 @@ public class UnityEditorHandlesTemplateEditor : Editor
 
                 Handles.Label(handleGO.transform.position, "Free Rotate Handle");
 
-                float size = HandleUtility.GetHandleSize(handleGO.transform.position);
+                float size = 1;
                 var newRotationHandleRot = Handles.FreeRotateHandle(handleGO.transform.rotation, handleGO.transform.position, size);
                 if (EditorGUI.EndChangeCheck())
                 {
@@ -171,10 +170,28 @@ public class UnityEditorHandlesTemplateEditor : Editor
             }
         }
 
-        // Draw Disc Handle
+        // Draw Slider Handle
         if (handlesExampleProp.arraySize >= 7)
         {
             var handleGOProp = handlesExampleProp.GetArrayElementAtIndex(7);
+            var handleGO = handleGOProp?.objectReferenceValue as GameObject;
+            if (handleGO != null)
+            {
+                EditorGUI.BeginChangeCheck();
+
+                var newSliderValue = Handles.Slider(handleGO.transform.position, handleGO.transform.right);
+                if (EditorGUI.EndChangeCheck())
+                {
+                    Undo.RecordObject(handleGO.transform, "Move Object");
+                    handleGO.transform.position = newSliderValue;
+                }
+            }
+        }
+
+        // Draw Disc Handle
+        if (handlesExampleProp.arraySize >= 8)
+        {
+            var handleGOProp = handlesExampleProp.GetArrayElementAtIndex(8);
             var handleGO = handleGOProp?.objectReferenceValue as GameObject;
             if (handleGO != null)
             {
@@ -191,29 +208,6 @@ public class UnityEditorHandlesTemplateEditor : Editor
                 {
                     Undo.RecordObject(handleGO.transform, "Rotate Object");
                     handleGO.transform.rotation = newDiscRotation;
-                }
-            }
-        }
-
-        // Draw Button Handle
-        if (handlesExampleProp.arraySize >= 8)
-        {
-            var handleGOProp = handlesExampleProp.GetArrayElementAtIndex(8);
-            var handleGO = handleGOProp?.objectReferenceValue as GameObject;
-            if (handleGO != null)
-            {
-                EditorGUI.BeginChangeCheck();
-
-                var size = serializedObject.FindProperty("discSize").floatValue;
-                var isClicked = Handles.Button(handleGO.transform.position, handleGO.transform.rotation, size, size, Handles.SphereHandleCap);
-
-                if (isClicked)
-                {
-                    Handles.Label(handleGO.transform.position, "Clicking! Button Handle");
-                }
-                else
-                {
-                    Handles.Label(handleGO.transform.position, "Click Me! Button Handle");
                 }
             }
         }
@@ -240,28 +234,10 @@ public class UnityEditorHandlesTemplateEditor : Editor
             }
         }
 
-        // Draw Slider Handle
+        // Draw ScaleValueHandle Handle
         if (handlesExampleProp.arraySize >= 10)
         {
             var handleGOProp = handlesExampleProp.GetArrayElementAtIndex(10);
-            var handleGO = handleGOProp?.objectReferenceValue as GameObject;
-            if (handleGO != null)
-            {
-                EditorGUI.BeginChangeCheck();
-
-                var newSliderValue = Handles.Slider(handleGO.transform.position, handleGO.transform.right);
-                if (EditorGUI.EndChangeCheck())
-                {
-                    Undo.RecordObject(handleGO.transform, "Move Object");
-                    handleGO.transform.position = newSliderValue;
-                }
-            }
-        }
-
-        // Draw ScaleValueHandle Handle
-        if (handlesExampleProp.arraySize >= 11)
-        {
-            var handleGOProp = handlesExampleProp.GetArrayElementAtIndex(11);
             var handleGO = handleGOProp?.objectReferenceValue as GameObject;
             if (handleGO != null)
             {
@@ -280,6 +256,31 @@ public class UnityEditorHandlesTemplateEditor : Editor
             }
         }
 
+        // Draw Button Handle
+        if (handlesExampleProp.arraySize >= 11)
+        {
+            var handleGOProp = handlesExampleProp.GetArrayElementAtIndex(11);
+            var handleGO = handleGOProp?.objectReferenceValue as GameObject;
+            if (handleGO != null)
+            {
+                EditorGUI.BeginChangeCheck();
+
+                var size = serializedObject.FindProperty("discSize").floatValue;
+                var isClicked = Handles.Button(handleGO.transform.position, handleGO.transform.rotation, size, size, Handles.SphereHandleCap);
+
+                if (isClicked)
+                {
+                    Handles.Label(handleGO.transform.position, "Clicking! Button Handle");
+                }
+                else
+                {
+                    Handles.Label(handleGO.transform.position, "Click Me! Button Handle");
+                }
+            }
+        }
+
+
+
         // Draw Non-Interactable
 
         // Draw Circles
@@ -289,7 +290,7 @@ public class UnityEditorHandlesTemplateEditor : Editor
             var handleGO = handleGOProp?.objectReferenceValue as GameObject;
             if (handleGO != null)
             {
-                var size = HandleUtility.GetHandleSize(handleGO.transform.position) / 2;
+                var size = 1;
                 var thickness = 1;
 
                 var pos = handleGO.transform.position;
@@ -307,37 +308,38 @@ public class UnityEditorHandlesTemplateEditor : Editor
                 Handles.DrawSolidArc(pos + offsetPos, Vector3.up, handleGO.transform.forward, 270f, size);
             }
         }
-        if (handlesExampleProp.arraySize >= 15)
+        if (handlesExampleProp.arraySize >= 13)
         {
-            var handleGOProp = handlesExampleProp.GetArrayElementAtIndex(15);
+            var handleGOProp = handlesExampleProp.GetArrayElementAtIndex(13);
             var handleGO = handleGOProp?.objectReferenceValue as GameObject;
             if (handleGO != null)
             {
-                var size = HandleUtility.GetHandleSize(handleGO.transform.position);
-                Handles.DrawWireCube(handleGO.transform.position, size * Vector3.one);
+                var pos = handleGO.transform.position;
+                var size = 1;
+                Handles.DrawWireCube(pos, size * Vector3.one);
             }
         }
-        if (handlesExampleProp.arraySize >= 16)
+        if (handlesExampleProp.arraySize >= 14)
         {
-            var handleGOProp = handlesExampleProp.GetArrayElementAtIndex(16);
+            var handleGOProp = handlesExampleProp.GetArrayElementAtIndex(14);
             var handleGO = handleGOProp?.objectReferenceValue as GameObject;
             if (handleGO != null)
             {
-                var size = HandleUtility.GetHandleSize(handleGO.transform.position);
+                var size = 1;
                 int controlID = GUIUtility.GetControlID(FocusType.Passive);
                 Handles.DrawSelectionFrame(controlID, handleGO.transform.position, handleGO.transform.rotation, size, EventType.Repaint);
             }
         }
 
         // Draw lines
-        if (handlesExampleProp.arraySize >= 18)
+        if (handlesExampleProp.arraySize >= 15)
         {
-            var handleGOProp = handlesExampleProp.GetArrayElementAtIndex(18);
+            var handleGOProp = handlesExampleProp.GetArrayElementAtIndex(15);
             var handleGO = handleGOProp.objectReferenceValue as GameObject;
             if (handleGO != null)
             {
                 var pos = handleGO.transform.position + new Vector3(-0.5f, 0, -0.5f);
-                var size = HandleUtility.GetHandleSize(handleGO.transform.position) / 2;
+                var size = 1;
                 var thickness = 1;
                 var seperationSize = 2 / size;
 
@@ -395,14 +397,14 @@ public class UnityEditorHandlesTemplateEditor : Editor
             }
         }
         // Draw Bezier
-        if (handlesExampleProp.arraySize >= 19)
+        if (handlesExampleProp.arraySize >= 16)
         {
-            var handleGOProp = handlesExampleProp.GetArrayElementAtIndex(19);
+            var handleGOProp = handlesExampleProp.GetArrayElementAtIndex(16);
             var handleGO = handleGOProp.objectReferenceValue as GameObject;
             if (handleGO != null)
             {
                 var pos = handleGO.transform.position + new Vector3(-0.5f, 0, -0.5f);
-                var size = HandleUtility.GetHandleSize(handleGO.transform.position);
+                var size = 1;
                 var thickness = 2 / size;
 
                 var p1 = pos;
@@ -416,14 +418,14 @@ public class UnityEditorHandlesTemplateEditor : Editor
             }
         }
         // Draw AAConvexPolygon
-        if (handlesExampleProp.arraySize >= 20)
+        if (handlesExampleProp.arraySize >= 17)
         {
-            var handleGOProp = handlesExampleProp.GetArrayElementAtIndex(20);
+            var handleGOProp = handlesExampleProp.GetArrayElementAtIndex(17);
             var handleGO = handleGOProp.objectReferenceValue as GameObject;
             if (handleGO != null)
             {
                 var pos = handleGO.transform.position;
-                var size = HandleUtility.GetHandleSize(handleGO.transform.position);
+                var size = 1;
 
                 Handles.DrawAAConvexPolygon(
                     pos + Vector3.forward * size,
@@ -432,11 +434,10 @@ public class UnityEditorHandlesTemplateEditor : Editor
                     pos + Vector3.left * size);
             }
         }
-
         // Draw outlines
-        if (handlesExampleProp.arraySize >= 21)
+        if (handlesExampleProp.arraySize >= 18)
         {
-            var handleGOProp = handlesExampleProp.GetArrayElementAtIndex(21);
+            var handleGOProp = handlesExampleProp.GetArrayElementAtIndex(18);
             var handleGO = handleGOProp.objectReferenceValue as GameObject;
             if (handleGO != null)
             {
@@ -445,7 +446,7 @@ public class UnityEditorHandlesTemplateEditor : Editor
                 Handles.DrawOutline(new[] { handleGO }, color, opacity);
 
                 var pos = handleGO.transform.position;
-                var size = HandleUtility.GetHandleSize(pos);
+                var size = 1;
                 var rectVerts = new[]
                 {
                     pos + new Vector3(-0.5f, 0, -0.5f) * size,
@@ -456,11 +457,10 @@ public class UnityEditorHandlesTemplateEditor : Editor
                 Handles.DrawSolidRectangleWithOutline(rectVerts, new Color(0, 1, 0, 0.2f), Color.green);
             }
         }
-
         // DrawTexture3DSDF
-        if (handlesExampleProp.arraySize >= 23)
+        if (handlesExampleProp.arraySize >= 19)
         {
-            var handleGOProp = handlesExampleProp.GetArrayElementAtIndex(23);
+            var handleGOProp = handlesExampleProp.GetArrayElementAtIndex(19);
             var handleGO = handleGOProp.objectReferenceValue as GameObject;
             if (handleGO != null)
             {
