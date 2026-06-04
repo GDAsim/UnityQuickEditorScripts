@@ -213,6 +213,7 @@ public class UnityEditorHandlesTemplateEditor : Editor
         }
 
         // Draw ScaleSlider Handle
+
         if (handlesExampleProp.arraySize >= 9)
         {
             var handleGOProp = handlesExampleProp.GetArrayElementAtIndex(9);
@@ -224,7 +225,7 @@ public class UnityEditorHandlesTemplateEditor : Editor
                 var scale = handleGO.transform.localScale.x;
                 var size = HandleUtility.GetHandleSize(handleGO.transform.position);
                 var snap = 25f; // in degree
-                var newScaleSliderValue = Handles.ScaleSlider(scale, handleGO.transform.position, handleGO.transform.right, handleGO.transform.rotation, size, snap);
+                var newScaleSliderValue = Handles.ScaleSlider(scale, handleGO.transform.position, Vector3.right, handleGO.transform.rotation, size, snap);
 
                 if (EditorGUI.EndChangeCheck())
                 {
@@ -246,7 +247,7 @@ public class UnityEditorHandlesTemplateEditor : Editor
                 var scale = handleGO.transform.localScale.x;
                 var size = scale * 2;
                 var snap = 0;
-                var newScaleValueValue = Handles.ScaleValueHandle(scale, handleGO.transform.position, handleGO.transform.rotation, size, Handles.CircleHandleCap, snap);
+                var newScaleValueValue = Handles.ScaleValueHandle(GUIUtility.GetControlID(10, FocusType.Passive), scale, handleGO.transform.position, handleGO.transform.rotation, size, Handles.CircleHandleCap, snap);
 
                 if (EditorGUI.EndChangeCheck())
                 {
