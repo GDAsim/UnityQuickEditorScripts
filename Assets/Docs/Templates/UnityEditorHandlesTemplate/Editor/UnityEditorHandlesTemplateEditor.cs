@@ -490,13 +490,6 @@ public class UnityEditorHandlesTemplateEditor : Editor
                 Handles.matrix = oldMatrix;
             }
         }
-
-        //preselectionColor
-        //selectedColor
-
-        //elementColor
-        //elementPreselectionColor
-        //elementSelectionColor
     }
 
     Handles.CapFunction GetHandlesCapFunction(UnityEditorHandlesTemplate.HandlesCapType capType)
